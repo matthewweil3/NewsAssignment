@@ -2,6 +2,7 @@
 {
     public class Test
     {
+        public int Id { get; set; }
         public string? title { get; set; }
         public string? link { get; set; } 
         public List<string>? keywords { get; set; }
