@@ -22,7 +22,7 @@ namespace NewsAssignment.Pages
         //public string topic { get; set; }
         //public async Task<IActionResult> OnPost()
         //{
-        //    Uri mb = new Uri(" https://musicbrainz.org/ws/2/artist/?query=" + topic + "&fmt=json");
+        //    Uri mb = new Uri("https://newsdata.io/api/1/news?apikey=pub_197475128a14bc8630f52229fdabc71b75c8d&category=" + topic + "&fmt=json");
 
         //    HttpClient client = new HttpClient();
         //    //not necessary
