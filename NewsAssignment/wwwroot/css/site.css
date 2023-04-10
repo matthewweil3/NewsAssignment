@@ -20,3 +20,29 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.home-card {
+    cursor: pointer;
+    min-height: 20rem;
+}
+
+.bg-orange {
+    background-color: #cc5514;
+}
+
+.bg-dark-red {
+    background-color: #5c0101;
+}
+
+.bg-blue-green {
+    background-color: #015c47;
+}
+
+.bg-violet {
+    background-color: #6d3be3;
+}
+
+.bg-magenta {
+    background-color: #e33bdb;
+}

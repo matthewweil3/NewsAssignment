@@ -1,10 +1,93 @@
 ﻿@page
+@using NewsAssignment.Models;
 @model IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1 align="center">Latest News</h1>
+
+@*
+    Masonry with card columns:
+    https://getbootstrap.com/docs/5.0/components/card/#masonry
+    https://getbootstrap.com/docs/5.0/examples/masonry/
+*@
+
+<div class="mt-3 row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" data-masonry='{"percentPosition": true }'>
+    @for (int i = 0; i < Model.Articles.Count; i++)
+    {
+        var article = Model.Articles[i];
+
+        <div class="col">
+            <div class="card home-card @(article.Color)" onclick="LoadArticle(@(i))" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <h6 class="card-header">
+                    <i class="bi-@(article.Icon)"></i>
+                    &nbsp;
+                    @article.Category
+                </h6>
+
+                @if (!string.IsNullOrEmpty(article.ImageUrl))
+                {
+                    <img src="@article.ImageUrl" class="card-img-top p-2" style="height: 10rem; object-fit: contain" />
+                }
+
+                <div class="card-body">
+                    <h5 class="card-title" id="title-@(i)">@article.Title</h5>
+                    <p class="card-text" id="description-@(i)">@article.Description</p>
+                </div>
+
+                <small class="card-footer" id="daysago-@(i)">
+                    @(article.DaysAgo)
+                </small>
+
+                <div style="display: none" id="category-@(i)">@(article.Category)</div>
+                <div style="display: none" id="icon-@(i)">@(article.Icon)</div>
+                <div style="display: none" id="image-@(i)">@(article.ImageUrl)</div>
+                <div style="display: none" id="color-@(i)">@(article.Color)</div>
+                <div style="display: none" id="content-@(i)">@(article.Content)</div>
+                <div style="display: none" id="creator-@(i)">@(article.Creator)</div>
+            </div>
+        </div>
+    }
 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" id="article-modal">
+        
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function LoadArticle(id) {
+            let title = $(`#title-${id}`).html();
+            let description = $(`#description-${id}`).html();
+            let category = $(`#category-${id}`).html();
+            let daysago = $(`#daysago-${id}`).html();
+            let icon = $(`#icon-${id}`).html();
+            let image = $(`#image-${id}`).html();
+            let color = $(`#color-${id}`).html();
+            let content = $(`#content-${id}`).html();
+            let creator = $(`#creator-${id}`).html();
+
+            $.ajax({
+                url: '@Url.Page("Articles/Article")',
+                data: {
+                    Title: title,
+                    Description: description,
+                    Category: category,
+                    DaysAgo: daysago,
+                    Icon: icon,
+                    Image: image,
+                    Color: color,
+                    Content: content,
+                    Creator: creator
+                },
+                success: function (data) {
+                    $('#article-modal').html(data);
+                }
+            });
+        }
+    </script>
+}

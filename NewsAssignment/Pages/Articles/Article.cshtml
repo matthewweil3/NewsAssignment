@@ -1,0 +1,47 @@
+﻿@page
+@model NewsAssignment.Pages.Articles.ArticleModel
+
+@{
+    Layout = null;
+}
+
+<div class="modal-content">
+    <div class="modal-header @Model.Color">
+        <div class="row">
+            <h5 class="modal-title">
+                <i class="bi-@(Model.Icon)"></i>
+                &nbsp;
+                @Model.Category
+            </h5>
+            
+            <h3 class="modal-title">
+                @Model.Article.Title
+            </h3>
+
+            <em>@Model.DaysAgo</em>
+        </div>
+    </div>
+
+    <div class="modal-body">
+        @if (!string.IsNullOrEmpty(Model.Article.ImageUrl))
+        {
+            <img src="@Model.Article.ImageUrl" class="card-img-top p-2 mb-2" style="max-width: 100%; max-height: 20rem; object-fit: contain" />
+        }
+
+        <div class="mb-2">
+            <em>@Model.Article.Description</em>
+        </div>
+
+        <div class="mb-2">
+            <em>Written By: @Model.Creator</em>
+        </div>
+
+        <hr />
+
+        <div class="mt-2">@Model.Article.Content</div> 
+    </div>
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+</div>
