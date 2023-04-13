@@ -1,0 +1,65 @@
+﻿@page
+@model NewsAssignment.Pages.ArticleCreationPortal.WriterModel
+@{
+    string user = "Anonymous";
+    if(User.Identity.Name != null)
+    {
+        user = User.Identity.Name;
+    }
+
+
+    // need to: implement user roles and add articles to DB. temporarily just returns a modal of the article
+}
+    
+
+<form action="../Articles/Article" method="get">
+    <label for="Title">Title</label> <br />
+    <input type="text" name="Title" />
+
+    <br /><br />
+
+    <label for="Description">Description</label><br />
+    <textarea style="min-width: 500px;" type="text" name="Description"></textarea>
+
+    <br /><br />
+
+    <label for="Category">Category</label><br />
+    <select name="Category" id="Category">
+        <option value="business">Business</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="environment">Environment</option>
+        <option value="food">Food</option>
+        <option value="health">Health</option>
+        <option value="politics">Politics</option>
+        <option value="science">Science</option>
+        <option value="sports">Sports</option>
+        <option value="technology">Technology</option>
+        <option value="top">Top</option>
+        <option value="tourism">Tourism</option>
+        <option value="world">World</option>
+    </select>
+
+    <br /><br />
+
+    <label for="Content">Content</label><br />
+    <textarea style="min-width: 1000px; min-height:800px;" name="Content"></textarea>
+
+    <br /><br />
+
+    <label for="Image">Image URL</label><br />
+    <input type="text" name="Image" />
+
+    <input type="text" name="Color" hidden value="" />
+    <input type="text" name="DaysAgo" hidden value="0" />
+    <input type="text" hidden name="Creator" value="@user" />
+    <input type="text" name="Icon" id="Icon" hidden value="" />
+    
+    <br /><br />
+
+    <input type="submit" />
+
+</form>
+
+
+
+

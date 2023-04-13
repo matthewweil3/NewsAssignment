@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NewsAssignment.Models;
+using Newtonsoft.Json;
 
 namespace NewsAssignment.Pages
 {
@@ -13,7 +14,7 @@ namespace NewsAssignment.Pages
             _logger = logger;
         }
 
-        public IList<Test> tests { get; set; }
+        public List<Test> tests { get; set; }
         public void OnGet()
         {
             tests = new List<Test>();
@@ -38,7 +39,7 @@ namespace NewsAssignment.Pages
                 tests = TestResults;
             }
             TestList retval = new TestList();
-            retval.tests = tests;
+            retval.test = tests;
             return Page();
         }
     }
