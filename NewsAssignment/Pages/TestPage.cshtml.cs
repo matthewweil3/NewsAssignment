@@ -14,11 +14,11 @@ namespace NewsAssignment.Pages
         //    _logger = logger;
         //}
 
-        //public IList<Test> tests { get; set; }
-        //public void OnGet()
-        //{
-        //    tests = new List<Test>();
-        //}
+        public List<Test> tests { get; set; }
+        public void OnGet()
+        {
+            tests = new List<Test>();
+        }
 
         //[BindProperty]
         //public string topic { get; set; }
@@ -32,15 +32,15 @@ namespace NewsAssignment.Pages
 
         //    HttpResponseMessage response = await client.GetAsync(mb.ToString());
 
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        string data = await response.Content.ReadAsStringAsync();
-        //        var TestResults = JsonConvert.DeserializeObject<List<Test>>(data);
-        //        tests = TestResults;
-        //    }
-        //    TestList retval = new TestList();
-        //    //retval.tests = tests;
-        //    return Page();
-        //}
+            if (response.IsSuccessStatusCode)
+            {
+                string data = await response.Content.ReadAsStringAsync();
+                var TestResults = JsonConvert.DeserializeObject<List<Test>>(data);
+                tests = TestResults;
+            }
+            TestList retval = new TestList();
+            retval.test = tests;
+            return Page();
+        }
     }
 }
