@@ -15,7 +15,7 @@
         public string? imageURL { get; set; }
         public string? sourceID { get; set; }
         public List<string>? countries { get; set; }
-        public List<string>? categories { get; set; }
+        public List<Category>? Categories { get; set; }
         public string? language { get; set; }
     }
 }

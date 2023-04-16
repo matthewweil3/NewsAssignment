@@ -10,5 +10,6 @@ namespace NewsAssignment.Data
             : base(options)
         {
         }
+
     }
 }
