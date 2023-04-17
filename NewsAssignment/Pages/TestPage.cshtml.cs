@@ -32,15 +32,15 @@ namespace NewsAssignment.Pages
 
         //    HttpResponseMessage response = await client.GetAsync(mb.ToString());
 
-            if (response.IsSuccessStatusCode)
-            {
-                string data = await response.Content.ReadAsStringAsync();
-                var TestResults = JsonConvert.DeserializeObject<List<Test>>(data);
-                tests = TestResults;
-            }
-            TestList retval = new TestList();
-            retval.test = tests;
-            return Page();
-        }
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    string data = await response.Content.ReadAsStringAsync();
+            //    var TestResults = JsonConvert.DeserializeObject<List<Test>>(data);
+            //    tests = TestResults;
+            //}
+            //TestList retval = new TestList();
+            //retval.test = tests;
+            //return Page();
+       // }
     }
 }

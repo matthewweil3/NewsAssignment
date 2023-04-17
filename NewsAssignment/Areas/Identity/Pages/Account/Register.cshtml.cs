@@ -139,7 +139,7 @@ namespace NewsAssignment.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    var defaultrole = _roleManager.FindByIdAsync("1").Result;
+                    var defaultrole = _roleManager.FindByNameAsync("SUB").Result;
 
                     if (defaultrole != null)
                     {

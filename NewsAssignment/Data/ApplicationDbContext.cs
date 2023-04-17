@@ -11,5 +11,11 @@ namespace NewsAssignment.Data
         {
         }
 
+        public DbSet<Category> Category { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
