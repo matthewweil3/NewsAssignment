@@ -14,6 +14,7 @@ namespace NewsAssignment.Pages
             _logger = logger;
         }
 
+        //TODO: access topics from user.
         //var currentUserName = HttpContext.User.Identity.Name;
 
         public List<Article> englishArticles { get; set; }
