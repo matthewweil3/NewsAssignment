@@ -8,7 +8,7 @@
         public string icon { get; set; }
         public string color { get; set; }
 
-        public List<ApplicationUser> ApplicationUsers { get; set; }
+        public List<ApplicationUserCategory> ApplicationUserCategories { get; set; }
         //public List<Article> Articles { get; set; }
 
     }

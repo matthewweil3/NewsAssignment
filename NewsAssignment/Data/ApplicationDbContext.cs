@@ -12,6 +12,7 @@ namespace NewsAssignment.Data
         }
 
         public DbSet<Category> Category { get; set; }
+        public DbSet<ApplicationUserCategory> ApplicationUserCategory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -9,7 +9,7 @@ namespace NewsAssignment.Models
         public int UsernameChangeLimit { get; set; } = 10;
 
         //Nav Props
-        public List<Category> Categories { get; set; }
+        public List<ApplicationUserCategory> ApplicationUserCategories { get; set; }
        // public List<Article> Articles { get; set; }
     }
 }

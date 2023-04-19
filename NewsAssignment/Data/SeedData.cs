@@ -76,6 +76,7 @@ namespace NewsAssignment.Data
             var user = new ApplicationUser {FirstName = "Matthew", LastName = "Weil", Email = "matthewweil3@gmail.com" , Id = "456" };
            // var defaultrole = _roleManager.FindByNameAsync("SUB").Result;
 
+
             context.Users.Add(user); 
             context.SaveChanges();
 

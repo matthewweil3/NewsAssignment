@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using NewsAssignment.Models;
 
@@ -32,6 +33,10 @@ namespace NewsAssignment.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        //private readonly ApplicationUserCategory _category;
+
+       // [BindProperty]
+        //public ApplicationUserCategory ApplicationUserCategory { get; set; }
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -39,7 +44,7 @@ namespace NewsAssignment.Areas.Identity.Pages.Account
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             RoleManager<IdentityRole> roleManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender)//ApplicationUserCategory category
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -48,8 +53,8 @@ namespace NewsAssignment.Areas.Identity.Pages.Account
             _logger = logger;
             _roleManager = roleManager;
             _emailSender = emailSender;
+            //_category = category;
         }
-
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -131,6 +136,7 @@ namespace NewsAssignment.Areas.Identity.Pages.Account
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName
+                    
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
