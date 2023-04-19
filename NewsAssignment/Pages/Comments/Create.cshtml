@@ -1,0 +1,38 @@
+﻿@page
+@model NewsAssignment.Pages.Comments.CreateModel
+
+<h4>Comment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Comment.ArticleID" class="control-label"></label>
+                <input asp-for="Comment.ArticleID" class="form-control" />
+                <span asp-validation-for="Comment.ArticleID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comment.Username" class="control-label"></label>
+                <input asp-for="Comment.Username" class="form-control" />
+                <span asp-validation-for="Comment.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comment.CommentBody" class="control-label"></label>
+                <input asp-for="Comment.CommentBody" class="form-control" />
+                <span asp-validation-for="Comment.CommentBody" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
