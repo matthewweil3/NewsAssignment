@@ -16,12 +16,12 @@ namespace NewsAssignment.Pages
 
         //var currentUserName = HttpContext.User.Identity.Name;
 
-        public List<Article> articles { get; set; }
+        public List<Article> englishArticles { get; set; }
         public ArticleList ArticleResults = new ArticleList();
 
         public async Task<IActionResult> OnGet()
         {
-            articles = new List<Article>();
+            englishArticles = new List<Article>();
             //Uri mb = new Uri("https://newsdata.io/api/1/news?apikey=pub_197475128a14bc8630f52229fdabc71b75c8d&category=" + topic);
             Uri mb = new Uri("https://newsdata.io/api/1/news?apikey=pub_197475128a14bc8630f52229fdabc71b75c8d&language=en");
 
@@ -33,10 +33,10 @@ namespace NewsAssignment.Pages
             {
                 string data = await response.Content.ReadAsStringAsync();
                 ArticleResults = JsonConvert.DeserializeObject<ArticleList>(data);
-                articles = ArticleResults.results;
+                englishArticles = ArticleResults.results;
             }
             ArticleList retval = new ArticleList();
-            retval.results = articles;
+            retval.results = englishArticles;
             return Page();
         }
     }
