@@ -13,6 +13,8 @@ namespace NewsAssignment.Pages
         //{
         //    _logger = logger;
         //}
+        
+        var currentUserName = User.Identity.Name;
 
         public List<Test> tests { get; set; }
         public void OnGet()
