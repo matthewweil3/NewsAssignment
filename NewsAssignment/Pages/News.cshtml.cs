@@ -25,9 +25,9 @@ namespace NewsAssignment.Pages
         public async Task<IActionResult> OnGet()
         {
             englishArticles = new List<Article>();
-            //Uri mb = new Uri("https://newsdata.io/api/1/news?apikey=pub_197475128a14bc8630f52229fdabc71b75c8d&category=" + topic);
+            Uri mb = new Uri("https://newsdata.io/api/1/news?apikey=pub_197475128a14bc8630f52229fdabc71b75c8d&category=" + topic);
 
-            for(int i = 0; i < 12; i++)
+            for (int i = 0; i < 12; i++)
             {
                 Uri mb = new Uri("https://newsdata.io/api/1/news?apikey=pub_197475128a14bc8630f52229fdabc71b75c8d&language=en&category=" + articleCategories[i]);
 
