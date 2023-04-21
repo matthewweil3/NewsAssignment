@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace NewsAssignment.Pages.Ads
+namespace NewsAssignment.Pages
 {
-    public class AdModel : PageModel
+    public class TestPageModel : PageModel
     {
         public void OnGet()
         {
