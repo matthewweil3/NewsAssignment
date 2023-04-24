@@ -145,13 +145,25 @@ namespace NewsAssignment.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    var defaultrole = _roleManager.FindByNameAsync("SUB").Result;
-
-                    if (defaultrole != null)
+                    if (user.Email == "matthewweil3@gmail.com")
                     {
-                        IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
-                    }
+                        var defaultrole = _roleManager.FindByNameAsync("ADMIN").Result;
 
+                        if (defaultrole != null)
+                        {
+                            IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
+                        }
+                    }
+                    else
+                    {
+                        var defaultrole = _roleManager.FindByNameAsync("SUB").Result;
+
+                        if (defaultrole != null)
+                        {
+                            IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
+                        }
+
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
