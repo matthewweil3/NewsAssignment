@@ -12,9 +12,9 @@ namespace NewsAssignment.Pages.Comments
 {
     public class DetailsModel : PageModel
     {
-        private readonly NewsAssignment.Data.NewsAssignmentCommentContext _context;
+        private readonly NewsAssignment.Data.ApplicationDbContext _context;
 
-        public DetailsModel(NewsAssignment.Data.NewsAssignmentCommentContext context)
+        public DetailsModel(NewsAssignment.Data.ApplicationDbContext context)
         {
             _context = context;
         }

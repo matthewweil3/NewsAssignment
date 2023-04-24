@@ -10,7 +10,7 @@ namespace NewsAssignment.Data
             : base(options)
         {
         }
-
+        public DbSet<NewsAssignment.Models.Comment> Comment { get; set; } = default!;
         public DbSet<Category> Category { get; set; }
         public DbSet<ApplicationUserCategory> ApplicationUserCategory { get; set; }
 

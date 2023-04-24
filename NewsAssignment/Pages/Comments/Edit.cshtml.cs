@@ -13,9 +13,9 @@ namespace NewsAssignment.Pages.Comments
 {
     public class EditModel : PageModel
     {
-        private readonly NewsAssignment.Data.NewsAssignmentCommentContext _context;
+        private readonly NewsAssignment.Data.ApplicationDbContext _context;
 
-        public EditModel(NewsAssignment.Data.NewsAssignmentCommentContext context)
+        public EditModel(NewsAssignment.Data.ApplicationDbContext context)
         {
             _context = context;
         }

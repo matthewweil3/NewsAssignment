@@ -16,8 +16,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<NewsAssignmentContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("NewsAssignmentContext") ?? throw new InvalidOperationException("Connection string 'NewsAssignmentContext' not found.")));
 
 builder.Services.Configure<IdentityOptions>(options =>
 {

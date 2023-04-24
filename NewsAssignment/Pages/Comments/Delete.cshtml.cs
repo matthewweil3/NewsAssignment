@@ -12,9 +12,9 @@ namespace NewsAssignment.Pages.Comments
 {
     public class DeleteModel : PageModel
     {
-        private readonly NewsAssignment.Data.NewsAssignmentCommentContext _context;
+        private readonly NewsAssignment.Data.ApplicationDbContext _context;
 
-        public DeleteModel(NewsAssignment.Data.NewsAssignmentCommentContext context)
+        public DeleteModel(NewsAssignment.Data.ApplicationDbContext context)
         {
             _context = context;
         }

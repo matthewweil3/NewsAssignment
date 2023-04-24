@@ -12,9 +12,9 @@ namespace NewsAssignment.Pages.Comments
 {
     public class IndexModel : PageModel
     {
-        private readonly NewsAssignment.Data.NewsAssignmentCommentContext _context;
+        private readonly NewsAssignment.Data.ApplicationDbContext _context;
 
-        public IndexModel(NewsAssignment.Data.NewsAssignmentCommentContext context)
+        public IndexModel(NewsAssignment.Data.ApplicationDbContext context)
         {
             _context = context;
         }
