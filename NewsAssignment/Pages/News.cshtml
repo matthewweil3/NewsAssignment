@@ -7,15 +7,15 @@
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model=>model.englishArticles[0].title)</th>
+            <th>@Html.DisplayNameFor(model=>model.englishArticles[0].link)</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.englishArticles)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.title)
-                </td>
+                <td>@Html.DisplayFor(modelItem => item.title)</td>
+                <td>@Html.DisplayFor(modelItem => item.link)</td>
             </tr>
         }
     </tbody>

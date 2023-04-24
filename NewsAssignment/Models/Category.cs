@@ -9,7 +9,7 @@
         public string color { get; set; }
 
         public List<ApplicationUserCategory> ApplicationUserCategories { get; set; }
-        //public List<Article> Articles { get; set; }
+        public List<Article> Articles { get; set; }
 
     }
 }

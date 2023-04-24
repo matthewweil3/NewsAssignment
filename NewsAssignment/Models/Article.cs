@@ -15,7 +15,6 @@
         public string? content { get; set; }
         public List<string>? country { get; set; }
         public List<string>? category { get; set; }
-        //public List<Category>? category { get; set; }
         public string? language { get; set; }
         public string? fullDescription { get; set; }
     }
