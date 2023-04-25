@@ -1,0 +1,66 @@
+﻿@page
+@model NewsAssignment.Pages.Categories.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<header>
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            function moveItems(origin, dest) {
+                $(origin).find(':selected').appendTo(dest);
+            }
+
+            function moveAllItems(origin, dest) {
+                $(origin).children().appendTo(dest);
+            }
+
+            $('#left').click(function () {
+                moveItems('#sbTwo', '#sbOne');
+            });
+
+            $('#right').on('click', function () {
+                moveItems('#sbOne', '#sbTwo');
+            });
+
+            $('#leftall').on('click', function () {
+                moveAllItems('#sbTwo', '#sbOne');
+            });
+
+            $('#rightall').on('click', function () {
+                moveAllItems('#sbOne', '#sbTwo');
+            });
+        });
+
+    </script>
+</header>
+<body>
+    <h2>Choose 5 of your favorite categories</h2>
+    <select id="sbOne" multiple="multiple"  size="15">
+        
+        <option value="1">Alpha</option>
+        <option value="2">Beta</option>
+        <option value="3">Gamma</option>
+        <option value="4">Delta</option>
+        <option value="5">Epsilon</option>
+    </select>
+
+    <select id="sbTwo" multiple="multiple" size="15">
+    </select>
+
+    <br />
+
+    <input type="button" id="left" value="<" />
+    <input type="button" id="right" value=">" />
+    <input type="button" id="leftall" value="<<" />
+    <input type="button" id="rightall" value=">>" />
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
