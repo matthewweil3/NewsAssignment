@@ -1,0 +1,72 @@
+﻿@page
+@model NewsAssignment.Pages.Categories.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+
+<header>
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            function moveItems(origin, dest) {
+                $(origin).find(':selected').appendTo(dest);
+            }
+
+            function moveAllItems(origin, dest) {
+                $(origin).children().appendTo(dest);
+            }
+
+            $("select").change(function () {
+                if ($("select option:selected").length > 5) {
+                    alert("You can only have 5 favorite topics. It will only save 5.");
+                    $('#right').prop('disabled', true);
+                }
+                else{
+                    $('#right').prop('disabled', false);
+                }
+            });
+
+            $('#left').click(function () {
+                moveItems('#sbTwo', '#sbOne');
+            });
+
+            $('#right').on('click', function () {
+                moveItems('#sbOne', '#sbTwo');
+            });
+
+            $('#leftall').on('click', function () {
+                moveAllItems('#sbTwo', '#sbOne');
+            });
+
+        });
+
+    </script>
+</header>
+<body>
+    <h2>Choose 5 of your favorite categories!</h2>
+    
+<form method="post">
+    <select id ="sbOne" multiple"  asp-items="@ViewBag.CategoryId" size="15"> Categories </select>
+
+    <select id = "sbTwo" name = "selected" multiple="multiple" size="15" selected ="true"> Favorites </select>
+
+    <br />
+
+    
+    <input type="button" id="left" value="<" />
+    <input type="button" id="right" value=">" />
+    <input type="button" id="leftall" value="<<" />
+    <br />
+    <input type="submit" id="submit" value="Save" />
+
+</form>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
