@@ -18,6 +18,16 @@
                 $(origin).children().appendTo(dest);
             }
 
+            $("select").change(function () {
+                if ($("select option:selected").length > 5) {
+                    alert("You can only have 5 favorite topics. It will only save 5.");
+                    $('#right').prop('disabled', true);
+                }
+                else{
+                    $('#right').prop('disabled', false);
+                }
+            });
+
             $('#left').click(function () {
                 moveItems('#sbTwo', '#sbOne');
             });
@@ -30,33 +40,28 @@
                 moveAllItems('#sbTwo', '#sbOne');
             });
 
-            $('#rightall').on('click', function () {
-                moveAllItems('#sbOne', '#sbTwo');
-            });
         });
 
     </script>
 </header>
 <body>
-    <h2>Choose 5 of your favorite categories</h2>
-    <select id="sbOne" multiple="multiple"  size="15">
-        
-        <option value="1">Alpha</option>
-        <option value="2">Beta</option>
-        <option value="3">Gamma</option>
-        <option value="4">Delta</option>
-        <option value="5">Epsilon</option>
-    </select>
+    <h2>Choose 5 of your favorite categories!</h2>
+    
+<form method="post">
+    <select id ="sbOne" multiple"  asp-items="@ViewBag.CategoryId" size="15"> Categories </select>
 
-    <select id="sbTwo" multiple="multiple" size="15">
-    </select>
+    <select id = "sbTwo" name = "selected" multiple="multiple" size="15" selected ="true"> Favorites </select>
 
     <br />
 
+    
     <input type="button" id="left" value="<" />
     <input type="button" id="right" value=">" />
     <input type="button" id="leftall" value="<<" />
-    <input type="button" id="rightall" value=">>" />
+    <br />
+    <input type="submit" id="submit" value="Save" />
+
+</form>
 </body>
 
 @section Scripts {
