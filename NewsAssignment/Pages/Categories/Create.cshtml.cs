@@ -17,7 +17,7 @@ namespace NewsAssignment.Pages.Categories
     {
         private readonly NewsAssignment.Data.ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private string storeID;
+        private string? storeID;
 
         public CreateModel(NewsAssignment.Data.ApplicationDbContext context, UserManager<ApplicationUser> usermanager)
         {
@@ -35,7 +35,7 @@ namespace NewsAssignment.Pages.Categories
         public ApplicationUserCategory ApplicationUserCategory { get; set; } = default!;
         
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+       
         public async Task<IActionResult> OnPostAsync()
         {
             storeID = _userManager.GetUserId(HttpContext.User);
