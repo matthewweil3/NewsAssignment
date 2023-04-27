@@ -6,16 +6,15 @@ namespace NewsAssignment.Pages.Jokes
 {
     public class JokeModel : PageModel
     {
-        public int NumOfJokes { get; set; } //limit
-        public class joke
+        public int NumOfJokes { get; set; } = 10; //limit
+        public class Joke
         {
-            public string id { get; set; }
-            public string j { get; set; }
+            public string joke { get; set; }
         }
         public class jokeList
         {
             public string count { get; set; }
-            public List<joke> jokes { get; set; }
+            public List<Joke> jokes { get; set; }
         }
 
         private readonly ILogger<JokeModel> _logger;
@@ -27,20 +26,21 @@ namespace NewsAssignment.Pages.Jokes
 
         [BindProperty]
         public string Jokejoke { get; set; }
+        public Joke[] jokes;
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnGet()
         {
             Uri mb = new Uri("https://api.api-ninjas.com/v1/dadjokes?limit=" + NumOfJokes);
 
             HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("+pstQyak7kkQIm1yJCuIlA==uGsyupWKQbsUGkUP", "");
+            client.DefaultRequestHeaders.Add("X-Api-Key", "+pstQyak7kkQIm1yJCuIlA==uGsyupWKQbsUGkUP");
             HttpResponseMessage response = await client.GetAsync(mb.ToString());
 
             if (response.IsSuccessStatusCode)
             {
                 string data = await response.Content.ReadAsStringAsync();
-                var JokelResults = JsonConvert.DeserializeObject<jokeList>(data);
-                js = labelResults.js;
+                jokes = JsonConvert.DeserializeObject<Joke[]>(data);
+                //jokes = JokeResults.jokes;
             }
             return Page();
         }
