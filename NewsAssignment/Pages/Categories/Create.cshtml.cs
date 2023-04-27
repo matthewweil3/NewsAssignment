@@ -48,7 +48,7 @@ namespace NewsAssignment.Pages.Categories
             }
             
 
-            return RedirectToPage("./Index");
+            return Redirect("~/Index");
         }
     }
 }

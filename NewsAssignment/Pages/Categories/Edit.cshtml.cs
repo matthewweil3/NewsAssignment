@@ -40,27 +40,19 @@ namespace NewsAssignment.Pages.Categories
         public async Task<IActionResult> OnPostAsync()
         {
 
-            storeID = _userManager.GetUserId(HttpContext.User);
-            //var cats = Request.Form["selected"];
+            storeID = _userManager.GetUserId(HttpContext.User); 
+            _context.ApplicationUserCategory.RemoveRange(_context.ApplicationUserCategory.Where(x => x.ApplicationUserId == storeID));
+            await _context.SaveChangesAsync();
 
-            //var ids = _context.ApplicationUserCategory.Count();
+            var cats = Request.Form["selected"];
+            for (int i = 0; i < 5; i++)  //loops 5 times because only select 5 categories
+            {
+                var APUC = new ApplicationUserCategory { ApplicationUserId = storeID, CategoryId = Int32.Parse(cats[i]) };
+                _context.ApplicationUserCategory.Add(APUC);
+                await _context.SaveChangesAsync();
+            }
 
-            //for (int i = 0; i < ids; i++)
-            //{
-            //    if(storeID == ApplicationUserCategory.ID.)
-            //}
-
-            //need to delete out then add
-
-            //https://stackoverflow.com/questions/41882419/linq-query-for-removing-all-objects-with-an-id-not-equal-to-a-list-of-ids-now-wo
-
-
-            var record = await _context.ApplicationUserCategory.FindAsync(storeID);
-            ApplicationUserCategory = record;
-            _context.ApplicationUserCategory.Remove(ApplicationUserCategory);
-
-
-            return RedirectToPage("./Index");
+            return Redirect("~/Index");
         }
 
         private bool ApplicationUserCategoryExists(int id)
