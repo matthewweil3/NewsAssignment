@@ -6,34 +6,43 @@ namespace NewsAssignment.Pages.Jokes
 {
     public class JokeModel : PageModel
     {
-        public int NumOfJokes { get; set; } //limit
-        public List<Label> Labels { get; set; }
-        public class Label
+        public int NumOfJokes { get; set; } = 10; //limit
+        public class Joke
         {
-            public string name { get; set; }
-            public string id { get; set; }
-            public string disambiguation { get; set; }
+            public string joke { get; set; }
+        }
+        public class jokeList
+        {
+            public string count { get; set; }
+            public List<Joke> jokes { get; set; }
         }
 
-        public async Task<PageResult> OnPostAsync()
+        private readonly ILogger<JokeModel> _logger;
+
+        public JokeModel(ILogger<JokeModel> logger)
+        {
+            _logger = logger;
+        }
+
+        [BindProperty]
+        public string Jokejoke { get; set; }
+        public Joke[] jokes;
+
+        public async Task<IActionResult> OnGet()
         {
             Uri mb = new Uri("https://api.api-ninjas.com/v1/dadjokes?limit=" + NumOfJokes);
 
             HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("+pstQyak7kkQIm1yJCuIlA==uGsyupWKQbsUGkUP", "");
+            client.DefaultRequestHeaders.Add("X-Api-Key", "+pstQyak7kkQIm1yJCuIlA==uGsyupWKQbsUGkUP");
             HttpResponseMessage response = await client.GetAsync(mb.ToString());
 
             if (response.IsSuccessStatusCode)
             {
                 string data = await response.Content.ReadAsStringAsync();
-                var labelResults = JsonConvert.DeserializeObject<List<Label>>(data);
-                Labels = labelResults;
+                jokes = JsonConvert.DeserializeObject<Joke[]>(data);
+                //jokes = JokeResults.jokes;
             }
             return Page();
-        }
-        public void OnGet()
-        {
-            Labels = new List<Label>();
         }
     }
 }
