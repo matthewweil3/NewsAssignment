@@ -7,15 +7,28 @@ namespace NewsAssignment.Pages.Jokes
     public class JokeModel : PageModel
     {
         public int NumOfJokes { get; set; } //limit
-        public List<Label> Labels { get; set; }
-        public class Label
+        public class joke
         {
-            public string name { get; set; }
             public string id { get; set; }
-            public string disambiguation { get; set; }
+            public string j { get; set; }
+        }
+        public class jokeList
+        {
+            public string count { get; set; }
+            public List<joke> jokes { get; set; }
         }
 
-        public async Task<PageResult> OnPostAsync()
+        private readonly ILogger<JokeModel> _logger;
+
+        public JokeModel(ILogger<JokeModel> logger)
+        {
+            _logger = logger;
+        }
+
+        [BindProperty]
+        public string Jokejoke { get; set; }
+
+        public async Task<IActionResult> OnPost()
         {
             Uri mb = new Uri("https://api.api-ninjas.com/v1/dadjokes?limit=" + NumOfJokes);
 
@@ -26,14 +39,10 @@ namespace NewsAssignment.Pages.Jokes
             if (response.IsSuccessStatusCode)
             {
                 string data = await response.Content.ReadAsStringAsync();
-                var labelResults = JsonConvert.DeserializeObject<List<Label>>(data);
-                Labels = labelResults;
+                var JokelResults = JsonConvert.DeserializeObject<jokeList>(data);
+                js = labelResults.js;
             }
             return Page();
-        }
-        public void OnGet()
-        {
-            Labels = new List<Label>();
         }
     }
 }
