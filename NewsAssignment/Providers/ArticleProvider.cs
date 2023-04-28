@@ -11,6 +11,12 @@ namespace NewsAssignment.Providers
         public List<ArticleDTO>? DTOArticles { get; set; }
         public ArticleDTOList? ArticleResults = new ArticleDTOList();
 
+        public ArticleProvider()
+        {
+            DBArticles = new List<Article>();
+            DTOArticles = new List<ArticleDTO>();
+        }
+
         public async Task<List<Article>> FetchCategoryArticles(string topic)
         {
             Uri mb = new Uri("https://newsdata.io/api/1/news?apikey=pub_197475128a14bc8630f52229fdabc71b75c8d&language=en&category=" + topic);

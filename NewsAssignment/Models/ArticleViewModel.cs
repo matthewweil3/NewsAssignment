@@ -4,13 +4,13 @@
     {
         public string Link { get; set; }
         public string Title { get; set; }
-        public List<string> Creators { get; set; }
+        public string Creator { get; set; }
         public string VideoUrl { get; set; }
         public string Description { get; set; }
         public string Content { get; set; }
         public DateTime PublishDate { get; set; }
         public string ImageUrl { get; set; }
-        public List<string> Countries { get; set; }
+        public string Country { get; set; }
         public List<string> Categories { get; set; }
         public string Language { get; set; }
         public string Category
@@ -62,13 +62,6 @@
             get
             {
                 return CategoryColors[Categories.First()];
-            }
-        }
-        public string Creator
-        {
-            get
-            {
-                return Creators.First();
             }
         }
 
@@ -134,9 +127,9 @@
 
             article.Link = random.Next(1_000_000_000).ToString();
             article.Title = $"Title {random.Next(1_000_000_000)}";
-            article.Creators = new List<string>() { "Random" };
+            article.Creator = "Random";
             article.Content = $"Content {random.Next(1_000_000_000)}";
-            article.Countries = new List<string>() { "US" };
+            article.Country = "US";
             article.PublishDate = new DateTime(2023, random.Next(1, 4), random.Next(1, 29));
             article.ImageUrl = ExampleImages[random.Next(ExampleImages.Count)];
             article.Language = "English";
