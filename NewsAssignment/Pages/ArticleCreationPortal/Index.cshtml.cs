@@ -21,7 +21,7 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
             userManager = uManager;          
         }
 
-        public async void OnGet()
+        public async Task<IActionResult> OnGet()
         {
             try
             {
@@ -30,13 +30,14 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
                 {
                     roleinfo = userrole.ToList();
                 }
+                return Page();
             }
             catch
             {
                 roleinfo = new List<string>();
-                roleinfo.Add("public user");
+                roleinfo.Add("Public User");
             }
-
+            return Page();
         }
     }
 }

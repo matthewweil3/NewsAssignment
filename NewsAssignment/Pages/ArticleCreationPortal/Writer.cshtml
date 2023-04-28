@@ -2,13 +2,10 @@
 @model NewsAssignment.Pages.ArticleCreationPortal.WriterModel
 @{
     string user = "Anonymous";
-    if(User.Identity.Name != null)
+    if(User != null)
     {
         user = User.Identity.Name;
     }
-
-
-    // need to: implement user roles and add articles to DB. temporarily just returns a modal of the article
 }
     
 
