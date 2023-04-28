@@ -8,11 +8,6 @@
 <table class="table" id="commentTable">
     <thead>
         <tr class="header">
-            <!--
-            <th>
-                @Html.DisplayNameFor(model => model.ArticleID)
-            </th>
-            -->
             <th>
                 @Html.DisplayNameFor(model => model.Username)
             </th>
@@ -26,24 +21,13 @@
     if(item.ArticleID.ToString() == ViewData["ArticleID"].ToString())
         {
         <tr>
-                <!--
-            <td>
-                @Html.DisplayFor(modelItem => item.ArticleID)
-            </td>
-                -->
             <td>
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CommentBody)
             </td>
-                <!--
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-                -->
+
         </tr>
 }}
     </tbody>
