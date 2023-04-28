@@ -6,24 +6,25 @@
 </p>
 -->
 <table class="table" id="commentTable">
-    <!--
     <thead>
-        <tr>
+        <tr class="header">
+            <!--
             <th>
                 @Html.DisplayNameFor(model => model.ArticleID)
             </th>
+            -->
             <th>
                 @Html.DisplayNameFor(model => model.Username)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CommentBody)
             </th>
-            <th></th>
         </tr>
     </thead>
-    -->
     <tbody>
 @foreach (var item in Model) {
+    if(item.ArticleID.ToString() == ViewData["ArticleID"].ToString())
+        {
         <tr>
                 <!--
             <td>
@@ -44,11 +45,6 @@
             </td>
                 -->
         </tr>
-}
+}}
     </tbody>
 </table>
-@section Scripts {
-    @{
-
-    }
-}
