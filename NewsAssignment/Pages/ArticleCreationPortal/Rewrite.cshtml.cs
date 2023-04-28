@@ -5,23 +5,22 @@ using Microsoft.EntityFrameworkCore;
 using NewsAssignment.Data;
 using NewsAssignment.Models;
 using System.Data;
-using System.Runtime.CompilerServices;
 
 namespace NewsAssignment.Pages.ArticleCreationPortal
 {
-    [Authorize(Roles = "Editor,Admin")]
-    public class EditorModel : PageModel
+    [Authorize(Roles = "Writer,Admin")]
+    public class RewriteModel : PageModel
     {
         ApplicationDbContext _context;
 
-        public EditorModel(NewsAssignment.Data.ApplicationDbContext context)
+        public RewriteModel(NewsAssignment.Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
         public IList<Article> Articles { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetRewrite(int? id)
+        public async Task<IActionResult> OnGetSubmit(int? id)
         {
             if (!ModelState.IsValid || _context.Article == null)
             {
@@ -32,7 +31,7 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
             {
                 foreach (var v in this._context.Article.Where(x => x.Id == id))
                 {
-                    v.status = Article.State.Rewrite;
+                    v.status = Article.State.Authored;
                 }
 
                 await _context.SaveChangesAsync();
@@ -43,27 +42,6 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
             return RedirectToPage("./Index");
         }
 
-        public async Task<IActionResult> OnGetEdited(int? id)
-        {
-            if (!ModelState.IsValid || _context.Article == null)
-            {
-                return Page();
-            }
-
-            if (_context.Article.Where(x => x.Id == id) != null)
-            {
-                foreach(var v in this._context.Article.Where(x => x.Id == id))
-                {
-                    v.status = Article.State.Edited;
-                }
-
-                await _context.SaveChangesAsync();
-
-                return RedirectToPage("./Index");
-            }
-
-            return RedirectToPage("./Index");
-        }
 
         public async Task<IActionResult> OnGet()
         {
@@ -72,9 +50,9 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
                 return Page();
             }
 
-            if (_context.Article != null)
+            if (_context.Article != null && User != null)
             {
-                Articles = await _context.Article.Where(x => x.status == Article.State.Authored).ToListAsync();
+                Articles = await _context.Article.Where(x => x.status == Article.State.Rewrite && x.creator == User.Identity.Name).ToListAsync();
                 return Page();
             }
 

@@ -8,6 +8,8 @@ using NuGet.Protocol.Core.Types;
 using System.Web;
 using System.Xml.Linq;
 using Azure.Core;
+using NewsAssignment.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace NewsAssignment.Pages.ArticleCreationPortal
 {
@@ -15,11 +17,15 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
     {
         public UserManager<ApplicationUser> userManager;
         public List<string> roleinfo;
+        ApplicationDbContext _context;
 
-        public IndexModel(UserManager<ApplicationUser> uManager)
+        public IndexModel(UserManager<ApplicationUser> uManager, NewsAssignment.Data.ApplicationDbContext context)
         {
+            _context = context;
             userManager = uManager;          
         }
+
+        public IList<Article> Articles { get; set; } = default!;
 
         public async Task<IActionResult> OnGet()
         {
@@ -30,6 +36,7 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
                 {
                     roleinfo = userrole.ToList();
                 }
+                Articles = await _context.Article.Where(x => x.status == Article.State.Rewrite && x.creator == User.Identity.Name).ToListAsync();
                 return Page();
             }
             catch

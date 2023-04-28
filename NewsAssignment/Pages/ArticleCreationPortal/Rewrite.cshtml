@@ -1,0 +1,54 @@
+﻿@page
+@model NewsAssignment.Pages.ArticleCreationPortal.RewriteModel
+@{
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Article Publish Date
+            </th>
+            <th>
+                Article Author
+            </th>
+            <th>
+                Article Title
+            </th>
+            <th>
+                Article Status
+            </th>
+            <th>
+                Reason for Return
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Articles)
+        {
+                <tr>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.pubDate)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.creator)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.status)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.ReturnReason)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> &nbsp;
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> &nbsp;
+                        <a asp-route-id="@item.Id" method="post" asp-page-handler="submit">Submit to editor</a> &nbsp;
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

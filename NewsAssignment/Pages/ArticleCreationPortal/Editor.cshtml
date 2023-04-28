@@ -40,7 +40,8 @@
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> &nbsp;
                     <a asp-page="./Details" asp-route-id="@item.Id">Details</a> &nbsp;
-                    <a asp-route-id="@item.Id" method="post" asp-page-handler="test">Submit for publishing</a> &nbsp;
+                    <a asp-route-id="@item.Id" method="post" asp-page-handler="edited">Submit for publishing</a> &nbsp;
+                    <a asp-route-id="@item.Id" method="post" asp-page-handler="rewrite">Send Back to Writers</a>
                 </td>
             </tr>
         }

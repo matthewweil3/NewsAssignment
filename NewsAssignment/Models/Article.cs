@@ -24,7 +24,8 @@ namespace NewsAssignment.Models
         //public List<string>? category { get; set; }
         public string? language { get; set; }
         public string? fullDescription { get; set; }
-        public enum State { Authored, Edited, Published };
+        public enum State { Authored, Edited, Published, Rewrite };
         public State? status { get; set; }
+        public string? ReturnReason { get; set; }
     }
 }

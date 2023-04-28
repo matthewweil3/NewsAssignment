@@ -23,12 +23,21 @@
             </div>
         </div>
     </div>
-        <div class="col-sm-6" style="margin-top:20px;">
+    <div class="col-sm-6" style="margin-top:20px;">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Publisher</h5>
                 <p class="card-text">Review articles to be puublished if you are the site's publisher.</p>
                 <a href="ArticleCreationPortal/Publisher" class="btn btn-primary">Publish Articles</a>
+            </div>
+        </div>
+    </div>
+        <div class="col-sm-6" style="margin-top:20px;">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Rewrite Portal - @if (User != null && Model.Articles != null) { @Html.Raw(" " + Model.Articles.Count().ToString()); } else { @Html.Raw("0");} </h5>
+                <p class="card-text">Any articles sent back to your account for revisions will be found here.</p>
+                <a href="ArticleCreationPortal/Rewrite" class="btn btn-primary">Rewrite Articles</a>
             </div>
         </div>
     </div>

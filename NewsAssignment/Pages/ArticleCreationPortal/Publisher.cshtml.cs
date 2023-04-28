@@ -20,7 +20,51 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
 
         public IList<Article> Articles { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetTest(int? id)
+        public async Task<IActionResult> OnGetEdit(int? id)
+        {
+            if (!ModelState.IsValid || _context.Article == null)
+            {
+                return Page();
+            }
+
+            if (_context.Article.Where(x => x.Id == id) != null)
+            {
+                foreach (var v in this._context.Article.Where(x => x.Id == id))
+                {
+                    v.status = Article.State.Authored;
+                    // v.ReturnReason = "";
+                }
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToPage("./Index");
+            }
+
+            return RedirectToPage("./Index");
+        }
+
+        public async Task<IActionResult> OnGetRewrite(int? id)
+        {
+            if (!ModelState.IsValid || _context.Article == null)
+            {
+                return Page();
+            }
+            if (_context.Article.Where(x => x.Id == id) != null)
+            {
+                foreach (var v in this._context.Article.Where(x => x.Id == id))
+                {
+                    v.status = Article.State.Rewrite;
+                }
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToPage("./Index");
+            }
+
+            return RedirectToPage("./Index");
+        }
+
+        public async Task<IActionResult> OnGetPublish(int? id)
         {
             if (!ModelState.IsValid || _context.Article == null)
             {
