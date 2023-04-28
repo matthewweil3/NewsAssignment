@@ -25,9 +25,11 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                <!--
             <td>
                 @Html.DisplayFor(modelItem => item.ArticleID)
             </td>
+                -->
             <td>
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
@@ -45,3 +47,8 @@
 }
     </tbody>
 </table>
+@section Scripts {
+    @{
+
+    }
+}

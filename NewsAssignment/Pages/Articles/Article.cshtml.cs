@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NewsAssignment.Models;
 
+
 namespace NewsAssignment.Pages.Articles
 {
     public class ArticleModel : PageModel
