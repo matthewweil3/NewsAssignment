@@ -52,7 +52,7 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
 
             if (_context.Article != null)
             {
-                Articles = await _context.Article.ToListAsync();
+                Articles = await _context.Article.Where(x => x.status == Article.State.Authored).ToListAsync();
                 return Page();
             }
 
