@@ -32,7 +32,7 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
             {
                 foreach(var v in this._context.Article.Where(x => x.Id == id))
                 {
-                    v.status = Article.State.Published;
+                    v.status = Article.State.Edited;
                 }
 
                 await _context.SaveChangesAsync();
