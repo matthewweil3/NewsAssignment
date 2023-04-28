@@ -1,8 +1,17 @@
 ﻿@page
 @model NewsAssignment.Pages.ArticleCreationPortal.IndexModel
 @{
+
 }
 
 <a href="ArticleCreationPortal/Writer">Writers</a>
 <a>Editors</a>
 <a>Publishers</a>
+
+<br />
+You are signed in as 
+    @if (User.Identity.Name != null) { @Html.Raw(@User.Identity.Name); } else { @Html.DisplayName("Anonymous");  }
+    <br />
+
+    And your roles are: @if(Model.roleinfo != null) {foreach(var v in Model.roleinfo){ @Html.Raw(v.ToString()) <br />;}}
+

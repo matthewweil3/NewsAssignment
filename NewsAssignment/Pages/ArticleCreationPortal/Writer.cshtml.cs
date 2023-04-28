@@ -1,29 +1,58 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NewsAssignment.Models;
+using System.Data;
 
 namespace NewsAssignment.Pages.ArticleCreationPortal
 {
+    [Authorize(Roles = "Writer")]
     public class WriterModel : PageModel
     {
-        public ArticleViewModel Article { get; set; }
+        private readonly NewsAssignment.Data.ApplicationDbContext _context;
+
+        public WriterModel(NewsAssignment.Data.ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public Article Article { get; set; }
         public string Icon { get; set; }
         public string Category { get; set; }
         public string DaysAgo { get; set; }
         public string Color { get; set; }
         public string Creator { get; set; }
 
-        public void OnGet(string Title, string Description, string Category, string DaysAgo,
+        public async Task<IActionResult> OnGetAsync(string Title, string Description, string Category, string DaysAgo,
                             string Image, string Color, string Content, string Icon, string Creator)
         {
-            Article = new ArticleViewModel { Title = Title, Description = Description, ImageUrl = Image, Content = Content };
-            this.Category = Category;
+
+            if (Category != null)
+            {
+                this.Color = ArticleViewModel.CategoryColors[Category];
+            }
+
+            if (Icon != null)
+            {
+                this.Icon = ArticleViewModel.CategoryIcons[Category];
+            }
+
+            if (!ModelState.IsValid || _context.Article == null)
+            {
+                return Page();
+            }
+
+            Article = new Article { title = Title, description = Description, image_url = Image, content = Content };
+            this.Category= Category;
             this.DaysAgo = DaysAgo;
             this.Color = Color;
             this.Icon = Icon;
             this.Creator = Creator;
 
-            // add article to DB
+            _context.Article.Add(Article);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }

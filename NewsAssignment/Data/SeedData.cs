@@ -34,7 +34,7 @@ namespace NewsAssignment.Data
         public static void Initialize(ApplicationDbContext context)
         {
             // Look for any Users
-            if (context.Roles.Any()||context.Category.Any()||context.Users.Any())
+            if (context.Roles.Any()||context.Category.Any() /*||context.Users.Any() not seeding users yet */)
             {
                 return;   // DB has been seeded
             }
