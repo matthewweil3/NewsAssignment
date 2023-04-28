@@ -48,12 +48,14 @@ namespace NewsAssignment.Pages
                 articleViewModel.VideoUrl = article.video_url;
                 articleViewModel.Description = article.description;
                 articleViewModel.Content = article.content;
-                articleViewModel.PublishDate = DateTime.ParseExact(article.pubDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);  // https://stackoverflow.com/questions/5366285/parse-string-to-datetime-in-c-sharp
                 articleViewModel.ImageUrl = article.image_url;
                 articleViewModel.Country = article.country;
                 articleViewModel.Categories = article.category.Split(",").Select(x => x.Trim()).ToList();
                 articleViewModel.Language = article.language;
 
+                // https://stackoverflow.com/questions/5366285/parse-string-to-datetime-in-c-sharp
+                articleViewModel.PublishDate = DateTime.ParseExact(article.pubDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                
                 Articles.Add(articleViewModel);
             }
 

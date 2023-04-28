@@ -13,7 +13,7 @@ namespace NewsAssignment.Pages.Articles
         public string Color { get; set; }
         public string Creator { get; set; }
 
-        public void OnGet(string Title, string Description, string Category, string DaysAgo,
+        public void OnPost(string Title, string Description, string Category, string DaysAgo,
                             string Image, string Color, string Content, string Icon, string Creator)
         {
             Article = new ArticleViewModel { Title = Title, Description = Description, ImageUrl = Image, Content = Content };

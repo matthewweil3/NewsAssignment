@@ -14,15 +14,13 @@
     https://getbootstrap.com/docs/5.0/examples/masonry/
 *@
 
-@*alt j*@
-
 <div class="mt-3 row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" data-masonry='{"percentPosition": true }'>
     @for (int i = 0; i < Model.Articles.Count; i++)
     {
         var article = Model.Articles[i];
 
         <div class="col">
-            <div class="card home-card @(article.Color)" onclick="LoadArticle(@(i))" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <a class="card home-card @(article.Color)" href="@(article.Link)" target="_blank">
                 <h6 class="card-header">
                     <i class="bi-@(article.Icon)"></i>
                     &nbsp;
@@ -49,7 +47,7 @@
                 <div style="display: none" id="color-@(i)">@(article.Color)</div>
                 <div style="display: none" id="content-@(i)">@(article.Content)</div>
                 <div style="display: none" id="creator-@(i)">@(article.Creator)</div>
-            </div>
+            </a>
         </div>
     }
 </div>
@@ -61,7 +59,7 @@
 </div>
 
 @section Scripts {
-    <script>
+    @*<script>
         function LoadArticle(id) {
             let title = $(`#title-${id}`).html();
             let description = $(`#description-${id}`).html();
@@ -75,6 +73,7 @@
 
             $.ajax({
                 url: '@Url.Page("Articles/Article")',
+                type: 'post',
                 data: {
                     Title: title,
                     Description: description,
@@ -91,5 +90,5 @@
                 }
             });
         }
-    </script>
+    </script>*@
 }

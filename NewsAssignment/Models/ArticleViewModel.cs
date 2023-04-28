@@ -25,7 +25,7 @@
         {
             get
             {
-                var timeSince = DateTime.Now - PublishDate;
+                var timeSince = DateTime.UtcNow - PublishDate;
 
                 if (timeSince.Days == 0)
                 {

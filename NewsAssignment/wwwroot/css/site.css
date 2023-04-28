@@ -25,6 +25,7 @@ body {
 .home-card {
     cursor: pointer;
     min-height: 20rem;
+    text-decoration: none;
 }
 
 .bg-orange {
