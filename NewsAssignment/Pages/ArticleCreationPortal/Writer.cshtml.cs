@@ -42,12 +42,8 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
                 return Page();
             }
 
-            Article = new Article { title = Title, description = Description, image_url = Image, content = Content };
-            this.Category= Category;
-            this.DaysAgo = DaysAgo;
-            this.Color = Color;
-            this.Icon = Icon;
-            this.Creator = Creator;
+            // we need to add: Icon, Category, and written/editor/published states to the Article Model. The link will be wherever it is within the pub/writ/edited stage after that is programmed in
+            Article = new Article { title = Title, description = Description, image_url = Image, content = Content, category = Category, pubDate = DateTime.Today.ToString(), creator = User.Identity.Name, language = "en", link = "placeholder"};
 
             _context.Article.Add(Article);
             await _context.SaveChangesAsync();
