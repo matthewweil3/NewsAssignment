@@ -18,7 +18,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-    if(item.ArticleID.ToString() == ViewData["ArticleID"].ToString())
+    @if(item.ArticleID.ToString() == ViewData["ArticleID"].ToString())
         {
         <tr>
             <td>
