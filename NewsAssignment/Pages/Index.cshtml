@@ -1,4 +1,5 @@
 ﻿@page
+@using Microsoft.AspNetCore.Razor.Runtime.TagHelpers;
 @using NewsAssignment.Models;
 @model IndexModel
 
@@ -58,8 +59,8 @@
     </div>
 </div>
 
-@section Scripts {
-    @*<script>
+@*@section Scripts {
+    <script>
         function LoadArticle(id) {
             let title = $(`#title-${id}`).html();
             let description = $(`#description-${id}`).html();
@@ -90,5 +91,6 @@
                 }
             });
         }
-    </script>*@
+    </script>
 }
+*@
