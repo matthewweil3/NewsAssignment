@@ -45,6 +45,7 @@ namespace NewsAssignment.Pages
             {
                 var articleViewModel = new ArticleViewModel();
 
+                articleViewModel.Id = article.Id;
                 articleViewModel.Link = article.link;
                 articleViewModel.Title = article.title;
                 articleViewModel.Creator = article.creator;
@@ -70,7 +71,7 @@ namespace NewsAssignment.Pages
                     {
                         var articleViewModel = new ArticleViewModel();
 
-                        //articleViewModel.Link = article.link;
+                        articleViewModel.Id = article.Id;
                         articleViewModel.Title = article.title;
                         articleViewModel.Creator = article.creator;
                         articleViewModel.VideoUrl = article.video_url;

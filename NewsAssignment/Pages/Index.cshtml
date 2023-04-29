@@ -1,6 +1,4 @@
 ﻿@page
-@using Microsoft.AspNetCore.Razor.Runtime.TagHelpers;
-@using NewsAssignment.Models;
 @model IndexModel
 
 @{
@@ -19,9 +17,11 @@
     @for (int i = 0; i < Model.Articles.Count; i++)
     {
         var article = Model.Articles[i];
+        var articleLink = !string.IsNullOrEmpty(article.Link) ? article.Link : Url.Page("/Articles/Article", new { id = article.Id });
+        var articleTarget = !string.IsNullOrEmpty(article.Link) ? "_blank" : "";
 
         <div class="col">
-            <a class="card home-card @(article.Color)" href="@(article.Link)" target="_blank">
+            <a class="card home-card @(article.Color)" href="@(articleLink)" target="@(articleTarget)">
                 <h6 class="card-header">
                     <i class="bi-@(article.Icon)"></i>
                     &nbsp;

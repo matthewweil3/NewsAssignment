@@ -2,6 +2,7 @@
 {
     public class ArticleViewModel
     {
+        public int Id { get; set; }
         public string Link { get; set; }
         public string Title { get; set; }
         public string Creator { get; set; }
@@ -125,7 +126,7 @@
             var article = new ArticleViewModel();
             var random = new Random();
 
-            article.Link = random.Next(1_000_000_000).ToString();
+            article.Id = -1;
             article.Title = $"Title {random.Next(1_000_000_000)}";
             article.Creator = "Random";
             article.Content = $"Content {random.Next(1_000_000_000)}";
