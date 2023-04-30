@@ -1,0 +1,101 @@
+﻿@page
+@model NewsAssignment.Pages.ArticleCreationPortal.articlscaffold.EditArticleModel
+@using Models;
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Article</h1>
+
+<div class="row mb-3">
+    <h6 class="col-12">
+        <a href='javascript:history.go(-1)' class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i>
+            &nbsp;
+            Return
+        </a>
+    </h6>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header @(ArticleViewModel.CategoryColors[Model.Article.category])">
+                <h5 class="card-title">
+                    <i class="bi-@(ArticleViewModel.CategoryIcons[Model.Article.category])"></i>
+                    &nbsp;
+                    @Model.Article.category
+                </h5>
+            
+                <h3 class="card-title">
+                    @Model.Article.title
+                </h3>
+
+                <em>Publish Date: &nbsp;@Model.Article.pubDate</em>
+            </div>
+
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.Article.image_url))
+                {
+                    <img src="@Model.Article.image_url" class="card-img-top p-2 mb-2" style="max-width: 100%; max-height: 20rem; object-fit: contain" />
+                }
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" disabled asp-for="Article.Id" />
+                            <input type="hidden" disabled asp-for="Article.status" />
+                            <input type="hidden" disabled asp-for="Article.pubDate" />
+                            <input type="hidden" disabled asp-for="Article.creator" />
+                            <input type="hidden" disabled asp-for="Article.category" />
+                            <input type="hidden" disabled asp-for="Article.country" />
+                            <input type="hidden" disabled asp-for="Article.fullDescription" />
+                            <input type="hidden" disabled asp-for="Article.language"  />
+                            <input type="hidden" disabled asp-for="Article.ReturnReason" />
+                            <div class="form-group">
+                                <label asp-for="Article.title" class="control-label">Title</label>
+                                <input asp-for="Article.title" class="form-control" />
+                                <span asp-validation-for="Article.title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Article.content" class="control-label">Content</label>
+                                <input asp-for="Article.content" class="form-control" />
+                                <span asp-validation-for="Article.content" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Article.description" class="control-label">Description</label>
+                                <input asp-for="Article.description" class="form-control" />
+                                <span asp-validation-for="Article.description" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Article.image_url" class="control-label">Image URL</label>
+                                <input asp-for="Article.image_url" class="form-control" />
+                                <span asp-validation-for="Article.image_url" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+
+
+
+
