@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<NewsAssignment.Models.Comment>
+@{
+    List<NewsAssignment.Models.Comment> comments = ViewData["Comments"] as List<NewsAssignment.Models.Comment>;
+}
 
 <!--
 <p>
@@ -17,18 +20,24 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-    @if(item.ArticleID.ToString() == ViewData["ArticleID"].ToString())
+        @if (comments != null)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CommentBody)
-            </td>
+            foreach (var item in comments)
+            {
+                @if (item.ArticleID.ToString() == ViewData["ArticleID"].ToString())
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CommentBody)
+                        </td>
 
-        </tr>
-}}
+                    </tr>
+                }
+
+            }
+        }
     </tbody>
 </table>

@@ -39,7 +39,7 @@ namespace NewsAssignment.Pages.Comments
             _context.Comment.Add(Comment);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return Redirect("../../Articles/Article?id=" + Comment.ArticleID.ToString());
         }
     }
 }

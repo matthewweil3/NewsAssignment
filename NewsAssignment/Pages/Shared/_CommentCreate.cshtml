@@ -1,27 +1,23 @@
 ﻿@model NewsAssignment.Models.Comment
 
-
-<h4>Comment</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="_CommentCreate">
+        <form asp-page="../Comments/Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ArticleID" class="control-label"></label>
-                <input asp-for="ArticleID" class="form-control" value="@ViewData["ArticleID"]" readonly/>
+                <input asp-for="ArticleID" class="form-control" value="@ViewData["ArticleID"]" hidden readonly/>
                 <span asp-validation-for="ArticleID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input  asp-for="Username" class="form-control" value="@ViewData["Username"]" readonly/>
+                <input  asp-for="Username" class="form-control" value="@ViewData["Username"]" hidden readonly/>
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CommentBody" class="control-label"></label>
+                <label asp-for="CommentBody" class="control-label">Add Comment: </label>
                 <input asp-for="CommentBody" class="form-control" />
                 <span asp-validation-for="CommentBody" class="text-danger"></span>
-            </div>
+            </div> <br/>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

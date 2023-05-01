@@ -23,9 +23,10 @@ namespace NewsAssignment.Pages.Articles
         public IActionResult OnGet(int id)
         {
             // For comments
-            comments = _context.Comment.Where(x => x.ArticleID == 1).ToList();
+            comments = _context.Comment.Where(x => x.ArticleID == id).ToList();
             ViewData["Username"] = User.Identity.Name;
             ViewData["ArticleID"] = id;
+            ViewData["Comments"] = comments;
 
             if (id == -1)
             {
@@ -61,6 +62,7 @@ namespace NewsAssignment.Pages.Articles
             comments = _context.Comment.Where(x => x.ArticleID == 1).ToList();
             ViewData["Username"] = User.Identity.Name;
             ViewData["ArticleID"] = id;
+            ViewData["Comments"] = comments;
 
             if (id == -1)
             {

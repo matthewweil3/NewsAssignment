@@ -44,15 +44,26 @@
                     <div class="col-md-4">
                         <form method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input type="hidden" disabled asp-for="Article.Id" />
-                            <input type="hidden" disabled asp-for="Article.status" />
-                            <input type="hidden" disabled asp-for="Article.pubDate" />
-                            <input type="hidden" disabled asp-for="Article.creator" />
-                            <input type="hidden" disabled asp-for="Article.category" />
-                            <input type="hidden" disabled asp-for="Article.country" />
-                            <input type="hidden" disabled asp-for="Article.fullDescription" />
-                            <input type="hidden" disabled asp-for="Article.language"  />
-                            <input type="hidden" disabled asp-for="Article.ReturnReason" />
+                            <input type="hidden" hidden asp-for="Article.Id" readonly/>
+                            <input type="hidden" hidden asp-for="Article.status" readonly/>
+                            <input type="hidden" hidden asp-for="Article.pubDate" readonly/>
+                            <input type="hidden" hidden asp-for="Article.creator" readonly/>
+                            <input type="hidden" hidden asp-for="Article.category" readonly/>
+                            <input type="hidden" hidden asp-for="Article.country" readonly/>
+                            <input type="hidden" hidden asp-for="Article.fullDescription" readonly/>
+                            <input type="hidden" hidden asp-for="Article.language"  readonly/>  
+                            @if (!User.IsInRole("Writer"))
+                            {
+                                 <div class="form-group">
+                                    <label asp-for="Article.ReturnReason" class="control-label">Return Reason</label>
+                                    <input asp-for="Article.ReturnReason" class="form-control" />
+                                    <span asp-validation-for="Article.ReturnReason" class="text-danger"></span>
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="hidden" hidden asp-for="Article.ReturnReason" readonly />
+                            }
                             <div class="form-group">
                                 <label asp-for="Article.title" class="control-label">Title</label>
                                 <input asp-for="Article.title" class="form-control" />
