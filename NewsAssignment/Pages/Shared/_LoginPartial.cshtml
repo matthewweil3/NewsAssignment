@@ -4,12 +4,12 @@
 @inject UserManager<ApplicationUser> UserManager
 
 
-<ul class="navbar-nav">
+<ul class="navbar-nav text-dark" style="font-size:18px;">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-      <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result.FirstName!</a>
-    </li>
+        <li class="nav-item">
+            <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @if (User != null) { @UserManager.GetUserAsync(User).Result.FirstName}!</a>
+        </li>
     <li class="nav-item">
         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post" >
             <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
@@ -18,11 +18,14 @@
 }
 else
 {
-    <li class="nav-item">
+    <li class="nav-item text-dark">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    <li class="nav-item text-dark">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+        <li class="nav-item text-dark">
+        <img style="margin-left:25px;height:50px; width:auto;" src="~/Image 1.png">
     </li>
 }
 </ul>

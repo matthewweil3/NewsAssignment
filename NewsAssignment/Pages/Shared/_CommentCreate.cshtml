@@ -1,8 +1,12 @@
 ﻿@model NewsAssignment.Models.Comment
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+    <div class="d-flex flex-start w-100">
+        <img class="rounded-circle shadow-1-strong me-3"
+             src="~/profile.png" style="height: 30px; width:30px; background-image:" alt="avatar"
+             height="40" />
+               <div class="form-outline w-100">
         <form asp-page="../Comments/Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -15,20 +19,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="CommentBody" class="control-label">Add Comment: </label>
-                <input asp-for="CommentBody" class="form-control" />
+                  <textarea asp-for="CommentBody" class="form-control" rows="4" style="background: #fff;"></textarea>
                 <span asp-validation-for="CommentBody" class="text-danger"></span>
             </div> <br/>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Add Comment" class="btn btn-primary" />
             </div>
         </form>
     </div>
+    </div>
 </div>
-<!--
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
--->
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

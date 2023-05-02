@@ -53,6 +53,7 @@ namespace NewsAssignment.Pages.Articles
             Article.Country = article.country;
             Article.Categories = article.category.Split(",").Select(x => x.Trim()).ToList();
             Article.Language = article.language;
+            Article.PublishDate = DateTime.Parse(article.pubDate);
 
             return Page();
         }
@@ -89,6 +90,7 @@ namespace NewsAssignment.Pages.Articles
             Article.Country = article.country;
             Article.Categories = article.category.Split(",").Select(x => x.Trim()).ToList();
             Article.Language = article.language;
+            Article.PublishDate = DateTime.Parse(article.pubDate);
 
             return Page();
         }

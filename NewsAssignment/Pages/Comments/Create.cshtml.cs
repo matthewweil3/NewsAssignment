@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
 using NewsAssignment.Data;
 using NewsAssignment.Models;
 
@@ -31,9 +32,14 @@ namespace NewsAssignment.Pages.Comments
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Comment == null || Comment == null)
+          if (!ModelState.IsValid || _context.Comment == null || Comment == null || Comment.CommentBody.IsNullOrEmpty())
             {
-                return Page();
+                return Redirect("../../Articles/Article?id=" + Comment.ArticleID.ToString());
+            }
+
+          if(User.Identity.Name != Comment.Username)
+            {
+                return StatusCode(401); // prevent people from impersonating comments
             }
 
             _context.Comment.Add(Comment);

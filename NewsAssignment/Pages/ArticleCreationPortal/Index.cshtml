@@ -43,9 +43,11 @@
     </div>
 </div>
 
+@* add admin view for all articles *@
+
 <br />
 You are signed in as: 
-    @if (User.Identity.Name != null) { @Html.Raw(@User.Identity.Name); } else { @Html.DisplayName("Anonymous");  }
+    @if (User != null) { @User.Identity.Name } else { @Html.DisplayName("Anonymous");  }
     <br />
 
     And your roles are: <br/> @if(Model.roleinfo != null)  {foreach(var v in Model.roleinfo){ @Html.Raw(v.ToString()) <br />;}}
