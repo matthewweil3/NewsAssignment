@@ -4,6 +4,7 @@ using NewsAssignment.Data;
 using Microsoft.Extensions.DependencyInjection;
 using NewsAssignment.Models;
 using NewsAssignment.Hubs;
+using NewsAssignment.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<IUserConnectionManager, UserConnectionManager>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -56,6 +58,8 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapHub<ChatHub>("/chatHub");
+app.MapHub<NotificationHub>("/NotificationHub");
+app.MapHub<NotificationUserHub>("/NotificationUserHub");
 
 using (var scope = app.Services.CreateScope())
 {
