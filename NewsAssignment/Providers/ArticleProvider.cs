@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NewsAssignment.Data;
 using NewsAssignment.Models;
 using Newtonsoft.Json;
 
@@ -10,9 +11,11 @@ namespace NewsAssignment.Providers
         public List<Article>? DBArticles { get; set; }
         public List<ArticleDTO>? DTOArticles { get; set; }
         public ArticleDTOList? ArticleResults = new ArticleDTOList();
+        private ApplicationDbContext _context;
 
-        public ArticleProvider()
+        public ArticleProvider(ApplicationDbContext context)
         {
+            _context = context;
             DBArticles = new List<Article>();
             DTOArticles = new List<ArticleDTO>();
         }
@@ -90,8 +93,11 @@ namespace NewsAssignment.Providers
                     DBArticles.Add(current);
                 }
             }
-
-            return DBArticles;
+            var urls = _context.Article.Select(x => x.link).ToList();
+            DBArticles = DBArticles.Where(x => !urls.Contains(x.link)).ToList();
+            _context.Article.AddRange(DBArticles);
+            _context.SaveChanges();
+            return _context.Article.Where(x => x.category.Contains(category)).ToList();
         }
 
         public async Task<List<Article>> FetchAllArticles()
@@ -170,8 +176,11 @@ namespace NewsAssignment.Providers
                     }
                 }
             }
-
-            return DBArticles;
+            var urls = _context.Article.Select(x => x.link).ToList();
+            DBArticles = DBArticles.Where(x => !urls.Contains(x.link)).ToList();
+            _context.Article.AddRange(DBArticles);
+            _context.SaveChanges();
+            return _context.Article.ToList();
         }
     }
 }
