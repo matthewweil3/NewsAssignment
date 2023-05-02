@@ -6,11 +6,10 @@
     data-masonry='@(ViewData["list-id"] == "latest-news" ? "" : "{\"percentPosition\": true }")'>
     @foreach (var article in Model)
     {
-        var articleLink = !string.IsNullOrEmpty(article.Link) ? article.Link : Url.Page("/Articles/Article", new { id = article.Id });
-        var articleTarget = !string.IsNullOrEmpty(article.Link) ? "_blank" : "";
+        var articleLink = Url.Page("/Articles/Article", new { id = article.Id });
 
         <div class="col">
-            <a class="card home-card @(article.Color)" href="@(articleLink)" target="@(articleTarget)">
+            <a class="card home-card @(article.Color)" href="@(articleLink)">
                 <h6 class="card-header">
                     <i class="bi-@(article.Icon)"></i>
                     &nbsp;

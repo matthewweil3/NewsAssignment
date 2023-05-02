@@ -22,6 +22,15 @@
             &nbsp;
             Return
         </a>
+
+        @if (!string.IsNullOrEmpty(Model.Article.Link))
+        {
+            <a href='@Model.Article.Link' class="btn btn-primary" target="_blank">
+                <i class="bi bi-globe"></i>
+                &nbsp;
+                Source
+            </a>
+        }
     </h6>
 </div>
 

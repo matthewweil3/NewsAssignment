@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using NewsAssignment.Data;
 using NewsAssignment.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Globalization;
 
 namespace NewsAssignment.Pages.Articles
 {
@@ -52,8 +53,18 @@ namespace NewsAssignment.Pages.Articles
             Article.ImageUrl = article.image_url;
             Article.Country = article.country;
             Article.Categories = article.category.Split(",").Select(x => x.Trim()).ToList();
+            Article.Link = article.link;
             Article.Language = article.language;
-            Article.PublishDate = DateTime.Parse(article.pubDate);
+
+            // https://stackoverflow.com/questions/5366285/parse-string-to-datetime-in-c-sharp
+            try
+            {
+                Article.PublishDate = DateTime.ParseExact(article.pubDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                Article.PublishDate = DateTime.Parse(article.pubDate);
+            }
 
             return Page();
         }
@@ -89,8 +100,18 @@ namespace NewsAssignment.Pages.Articles
             Article.ImageUrl = article.image_url;
             Article.Country = article.country;
             Article.Categories = article.category.Split(",").Select(x => x.Trim()).ToList();
+            Article.Link = article.link;
             Article.Language = article.language;
-            Article.PublishDate = DateTime.Parse(article.pubDate);
+
+            // https://stackoverflow.com/questions/5366285/parse-string-to-datetime-in-c-sharp
+            try
+            {
+                Article.PublishDate = DateTime.ParseExact(article.pubDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                Article.PublishDate = DateTime.Parse(article.pubDate);
+            }
 
             return Page();
         }
