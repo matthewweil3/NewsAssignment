@@ -22,6 +22,14 @@
                 return firstCategory[0].ToString().ToUpper() + firstCategory[1..];
             }
         }
+        public string CategoriesString
+        {
+            get
+            {
+                var capitalCategories = Categories.Select(x => x[0].ToString().ToUpper() + x[1..]);
+                return string.Join(", ", capitalCategories);
+            }
+        }
         public string DaysAgo
         {
             get
@@ -121,7 +129,7 @@
             "https://www.thomasmore.edu/wp-content/uploads/TMU_SIG_2_BL_RGB-1024x305.png"
         };
 
-        public static ArticleViewModel CreateRandomModel()
+        public static ArticleViewModel CreateRandomModel(string? category = null)
         {
             var article = new ArticleViewModel();
             var random = new Random();
@@ -139,8 +147,14 @@
             article.Description = $"Description {random.Next(1_000_000_000)} ";
             article.Description = string.Concat(Enumerable.Repeat(article.Description, random.Next(1, 10))).Trim();  // Repeat Description
 
-            var categoryIndex = random.Next(AllCategories.Count);
-            article.Categories = new List<string>() { AllCategories[categoryIndex] };
+            // https://stackoverflow.com/questions/55817517/get-a-random-list-of-integer-array-in-c-sharp/55817602
+            var categoryIndices = Enumerable.Range(0, AllCategories.Count).OrderBy(_ => random.Next()).Take(2);
+            article.Categories = categoryIndices.Select(x => AllCategories[x]).ToList();
+
+            if (!string.IsNullOrEmpty(category) && !article.Categories.Contains(category))
+            {
+                article.Categories.Insert(0, category);
+            }
 
             return article;
         }

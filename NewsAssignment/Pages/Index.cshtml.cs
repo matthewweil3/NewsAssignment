@@ -8,89 +8,99 @@ using System.Globalization;
 
 namespace NewsAssignment.Pages
 {
+    [IgnoreAntiforgeryToken]
     public class IndexModel : PageModel
     {
         private IConfiguration _config;
         private ArticleProvider _provider;
         private bool _useRandomArticles;
-        ApplicationDbContext _context;
+        private ApplicationDbContext _context;
+
         public List<ArticleViewModel> Articles;
+        public Dictionary<string, List<ArticleViewModel>> ArticlesByCategory;
 
         public IndexModel(IConfiguration configuration, NewsAssignment.Data.ApplicationDbContext context)
         {
             _config = configuration;
-            _provider = new ArticleProvider();
+            _provider = new ArticleProvider(context);
             _useRandomArticles = _config.GetValue<bool>("UseRandomArticles");
             _context = context;
 
             Articles = new List<ArticleViewModel>();
+            ArticlesByCategory = new Dictionary<string, List<ArticleViewModel>>();
         }
 
         public async Task<IActionResult> OnGet()
         {
+            // Get user categories
+            var userId = _context.Users.Where(x => x.UserName == User.Identity.Name).Select(x => x.Id).FirstOrDefault();
+            var userCategoryIds = _context.ApplicationUserCategory.Where(x => x.ApplicationUserId == userId).Select(x => x.CategoryId).ToList();
+            var userCategories = _context.Category.Where(x => userCategoryIds.Contains(x.CategoryId)).Select(x => x.name).ToList();
+
             if (_useRandomArticles)
             {
-                for (int i = 0; i < 100; i++)
+                // Generate 10 articles for each category
+                if (userCategories != null && userCategories.Count() > 0)
+                {
+                    foreach (var category in userCategories)
+                    {
+                        var categoryArticles = new List<ArticleViewModel>();
+
+                        for (int i = 0; i < 10; i++)
+                        {
+                            categoryArticles.Add(ArticleViewModel.CreateRandomModel(category));
+                        }
+
+                        ArticlesByCategory[category] = categoryArticles;
+                    }
+                }
+
+                // Generate random articles for Latest News
+                for (int i = 0; i < 50; i++)
                 {
                     Articles.Add(ArticleViewModel.CreateRandomModel());
                 }
-
-                return Page();
             }
-
-            // Get articles and convert to view models
-            var dbArticles = await _provider.FetchAllArticles();
-
-            foreach (var article in dbArticles)
+            else
             {
-                var articleViewModel = new ArticleViewModel();
-
-                articleViewModel.Id = article.Id;
-                articleViewModel.Link = article.link;
-                articleViewModel.Title = article.title;
-                articleViewModel.Creator = article.creator;
-                articleViewModel.VideoUrl = article.video_url;
-                articleViewModel.Description = article.description;
-                articleViewModel.Content = article.content;
-                articleViewModel.ImageUrl = article.image_url;
-                articleViewModel.Country = article.country;
-                articleViewModel.Categories = article.category.Split(",").Select(x => x.Trim()).ToList();
-                articleViewModel.Language = article.language;
-
-                // https://stackoverflow.com/questions/5366285/parse-string-to-datetime-in-c-sharp
-                articleViewModel.PublishDate = DateTime.ParseExact(article.pubDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-                
-                Articles.Add(articleViewModel);
-            }
-
-            if (_context.Article != null)
-            {
-                foreach (var article in _context.Article)
+                // Get 10 articles for each category
+                if (userCategories != null && userCategories.Count() > 0)
                 {
-                    if (article.status == Article.State.Published)
+                    foreach (var category in userCategories)
                     {
-                        var articleViewModel = new ArticleViewModel();
-
-                        articleViewModel.Id = article.Id;
-                        articleViewModel.Title = article.title;
-                        articleViewModel.Creator = article.creator;
-                        articleViewModel.VideoUrl = article.video_url;
-                        articleViewModel.Description = article.description;
-                        articleViewModel.Content = article.content;
-                        articleViewModel.ImageUrl = article.image_url;
-                        articleViewModel.Country = article.country;
-                        articleViewModel.Categories = article.category.Split(",").Select(x => x.Trim()).ToList();
-                        articleViewModel.Language = article.language;
-
-                        // https://stackoverflow.com/questions/5366285/parse-string-to-datetime-in-c-sharp
-                        articleViewModel.PublishDate = DateTime.Parse(article.pubDate);
-
-                        Articles.Add(articleViewModel);
+                        var categoryArticles = await _provider.FetchCategoryArticles(category);
+                        ArticlesByCategory[category] = categoryArticles.Take(10).ToList();
                     }
                 }
+
+                // Get articles from API and database for Latest News
+                Articles = await _provider.FetchAllArticles(20);
             }
 
             return Page();
+        }
+
+        // Endless Scroll
+        // https://programmingcsharp.com/ajax-calls-in-asp-net-core-razor-pages/
+        public async Task<IActionResult> OnPostEndlessScroll(int startIndex)
+        {
+            var endlessArticles = new List<ArticleViewModel>();
+
+            if (_useRandomArticles)
+            {
+                // Generate 10 more random articles
+                for (int i = 0; i < 10; i++)
+                {
+                    endlessArticles.Add(ArticleViewModel.CreateRandomModel());
+                }
+            }
+            else
+            {
+                // Get 20 more articles
+                endlessArticles = await _provider.FetchAllArticles(20, startIndex);
+            }
+
+            return Partial("Articles/EndlessArticles", endlessArticles);
         }
     }
 }

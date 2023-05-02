@@ -3,9 +3,8 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    ViewData["list-id"] = "category";
 }
-
-<h1 style="color:#106DC9;" align="center">Latest News</h1>
 
 @*
     Masonry with card columns:
@@ -13,84 +12,67 @@
     https://getbootstrap.com/docs/5.0/examples/masonry/
 *@
 
-<div class="mt-3 row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" data-masonry='{"percentPosition": true }'>
-    @for (int i = 0; i < Model.Articles.Count; i++)
-    {
-        var article = Model.Articles[i];
-        var articleLink = !string.IsNullOrEmpty(article.Link) ? article.Link : Url.Page("/Articles/Article", new { id = article.Id });
-        var articleTarget = !string.IsNullOrEmpty(article.Link) ? "_blank" : "";
+@foreach(var category in Model.ArticlesByCategory.Keys)
+{
+    <h1 style="color:#106DC9;" align="center">@(category[0].ToString().ToUpper() + category[1..])</h1>
+    @await Html.PartialAsync("~/Pages/Articles/ArticleList.cshtml", Model.ArticlesByCategory[category], ViewData)
+}
 
-        <div class="col">
-            <a class="card home-card @(article.Color)" href="@(articleLink)" target="@(articleTarget)">
-                <h6 class="card-header">
-                    <i class="bi-@(article.Icon)"></i>
-                    &nbsp;
-                    @article.Category
-                </h6>
+@{
+    ViewData["list-id"] = "latest-news";
+}
 
-                @if (!string.IsNullOrEmpty(article.ImageUrl))
-                {
-                    <img src="@article.ImageUrl" class="card-img-top p-2" style="height: 10rem; object-fit: contain" />
-                }
+<h1 style="color:#106DC9;" align="center">Latest News</h1>
+@await Html.PartialAsync("~/Pages/Articles/ArticleList.cshtml", Model.Articles, ViewData)
 
-                <div class="card-body">
-                    <h5 class="card-title" id="title-@(i)">@article.Title</h5>
-                    <p class="card-text" id="description-@(i)">@article.Description</p>
-                </div>
-
-                <small class="card-footer" id="daysago-@(i)">
-                    @(article.DaysAgo)
-                </small>
-
-                <div style="display: none" id="category-@(i)">@(article.Category)</div>
-                <div style="display: none" id="icon-@(i)">@(article.Icon)</div>
-                <div style="display: none" id="image-@(i)">@(article.ImageUrl)</div>
-                <div style="display: none" id="color-@(i)">@(article.Color)</div>
-                <div style="display: none" id="content-@(i)">@(article.Content)</div>
-                <div style="display: none" id="creator-@(i)">@(article.Creator)</div>
-            </a>
-        </div>
-    }
-</div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" id="article-modal">
-        
-    </div>
-</div>
-
-@*@section Scripts {
+@section Scripts {
     <script>
-        function LoadArticle(id) {
-            let title = $(`#title-${id}`).html();
-            let description = $(`#description-${id}`).html();
-            let category = $(`#category-${id}`).html();
-            let daysago = $(`#daysago-${id}`).html();
-            let icon = $(`#icon-${id}`).html();
-            let image = $(`#image-${id}`).html();
-            let color = $(`#color-${id}`).html();
-            let content = $(`#content-${id}`).html();
-            let creator = $(`#creator-${id}`).html();
+        // Masonry
+        $('#latest-news').masonry({ percentPosition: true });
 
-            $.ajax({
-                url: '@Url.Page("Articles/Article")',
-                type: 'post',
-                data: {
-                    Title: title,
-                    Description: description,
-                    Category: category,
-                    DaysAgo: daysago,
-                    Icon: icon,
-                    Image: image,
-                    Color: color,
-                    Content: content,
-                    Creator: creator
-                },
-                success: function (data) {
-                    $('#article-modal').html(data);
+        // Endless scroll
+        function infinitiyScroll() {
+            this.loading = false;       // True if asynchronous loading is in process
+
+            this.AddTableLines = function (startIndex) {
+                this.loading = true;
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '/?handler=EndlessScroll',
+                    data: { startIndex: startIndex },
+                    dataType: "html"
+                }).done(function (result) {
+                    if (result) {
+                        // Append result to grid
+                        $('#latest-news').append(result);
+
+                        // Remove Masonry and reinitialize
+                        // https://masonry.desandro.com/options.html
+                        // https://stackoverflow.com/questions/17476657/masonry-destroy-and-initialize-again
+                        $('#latest-news').removeData('masonry');
+                        $('#latest-news').masonry({ percentPosition: true });
+
+                        self.loading = false;
+                    }
+                }).fail(function (xhr, ajaxOptions, thrownError) {
+                    console.log("Error in AddTableLines:", thrownError);
+                });
+            }
+
+            var self = this;
+
+            window.onscroll = function (ev) {
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                    // User is currently at the bottom of the page
+                    if (!self.loading) {
+                        var itemCount = $('#latest-news div.col').length;
+                        self.AddTableLines(itemCount);
+                    }
                 }
-            });
+            };
         }
+
+        var endlessScroll = new infinitiyScroll();
     </script>
 }
-*@

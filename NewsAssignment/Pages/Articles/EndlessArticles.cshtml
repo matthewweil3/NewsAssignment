@@ -1,0 +1,31 @@
+﻿@model List<NewsAssignment.Models.ArticleViewModel>
+
+@foreach (var article in Model)
+{
+    var articleLink = !string.IsNullOrEmpty(article.Link) ? article.Link : Url.Page("/Articles/Article", new { id = article.Id });
+    var articleTarget = !string.IsNullOrEmpty(article.Link) ? "_blank" : "";
+
+    <div class="col">
+        <a class="card home-card @(article.Color)" href="@(articleLink)" target="@(articleTarget)">
+            <h6 class="card-header">
+                <i class="bi-@(article.Icon)"></i>
+                &nbsp;
+                @article.CategoriesString
+            </h6>
+
+            @if (!string.IsNullOrEmpty(article.ImageUrl))
+            {
+                <img src="@article.ImageUrl" class="card-img-top p-2" style="height: 10rem; object-fit: contain" />
+            }
+
+            <div class="card-body">
+                <h5 class="card-title">@article.Title</h5>
+                <p class="card-text">@article.Description</p>
+            </div>
+
+            <small class="card-footer">
+                @(article.DaysAgo)
+            </small>
+        </a>
+    </div>
+}

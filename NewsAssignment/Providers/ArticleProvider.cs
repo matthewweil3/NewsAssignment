@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NewsAssignment.Data;
+using NewsAssignment.Data.Migrations;
 using NewsAssignment.Models;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace NewsAssignment.Providers
 {
@@ -10,15 +13,18 @@ namespace NewsAssignment.Providers
         public List<Article>? DBArticles { get; set; }
         public List<ArticleDTO>? DTOArticles { get; set; }
         public ArticleDTOList? ArticleResults = new ArticleDTOList();
+        private ApplicationDbContext _context;
 
-        public ArticleProvider()
+        public ArticleProvider(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<List<ArticleViewModel>> FetchCategoryArticles(string topic)
         {
             DBArticles = new List<Article>();
             DTOArticles = new List<ArticleDTO>();
-        }
 
-        public async Task<List<Article>> FetchCategoryArticles(string topic)
-        {
             Uri mb = new Uri("https://newsdata.io/api/1/news?apikey=pub_197475128a14bc8630f52229fdabc71b75c8d&language=en&category=" + topic);
 
             HttpClient client = new HttpClient();
@@ -91,11 +97,24 @@ namespace NewsAssignment.Providers
                 }
             }
 
-            return DBArticles;
+            // Add API articles to database
+            var urls = _context.Article.Select(x => x.link).ToList();
+            DBArticles = DBArticles.Where(x => !urls.Contains(x.link)).ToList();
+            _context.Article.AddRange(DBArticles);
+            await _context.SaveChangesAsync();
+
+            // Grab published articles from database and filter by category
+            var dbArticles = _context.Article.Where(x => (x.status == null || x.status == Article.State.Published) && x.category.Contains(topic)).ToList();
+            var viewModels = ArticleToViewModel(dbArticles).OrderByDescending(x => x.PublishDate).ToList();
+
+            return viewModels;
         }
 
-        public async Task<List<Article>> FetchAllArticles()
+        public async Task<List<ArticleViewModel>> FetchAllArticles(int take, int skip = 0)
         {
+            DBArticles = new List<Article>();
+            DTOArticles = new List<ArticleDTO>();
+
             for (int i = 0; i < 12; i++)
             {
                 Uri mb = new Uri("https://newsdata.io/api/1/news?apikey=pub_197475128a14bc8630f52229fdabc71b75c8d&language=en&category=" + articleCategories[i]);
@@ -171,7 +190,53 @@ namespace NewsAssignment.Providers
                 }
             }
 
-            return DBArticles;
+            // Add API articles to database
+            var urls = _context.Article.Select(x => x.link).ToList();
+            DBArticles = DBArticles.Where(x => !urls.Contains(x.link)).ToList();
+            _context.Article.AddRange(DBArticles);
+            await _context.SaveChangesAsync();
+
+            // Grab published articles from database and filter by category
+            var dbArticles = _context.Article.Where(x => x.status == null || x.status == Article.State.Published).ToList();
+            var viewModels = ArticleToViewModel(dbArticles).OrderByDescending(x => x.PublishDate).Skip(skip).Take(take).ToList();
+
+            return viewModels;
+        }
+
+        private List<ArticleViewModel> ArticleToViewModel(List<Article> articles)
+        {
+            var viewModels = new List<ArticleViewModel>();
+
+            foreach (var article in articles)
+            {
+                var articleViewModel = new ArticleViewModel();
+
+                articleViewModel.Id = article.Id;
+                articleViewModel.Link = article.link;
+                articleViewModel.Title = article.title;
+                articleViewModel.Creator = article.creator;
+                articleViewModel.VideoUrl = article.video_url;
+                articleViewModel.Description = article.description;
+                articleViewModel.Content = article.content;
+                articleViewModel.ImageUrl = article.image_url;
+                articleViewModel.Country = article.country;
+                articleViewModel.Categories = article.category.Split(",").Select(x => x.Trim()).ToList();
+                articleViewModel.Language = article.language;
+
+                // https://stackoverflow.com/questions/5366285/parse-string-to-datetime-in-c-sharp
+                try
+                {
+                    articleViewModel.PublishDate = DateTime.ParseExact(article.pubDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                }
+                catch
+                {
+                    articleViewModel.PublishDate = DateTime.Parse(article.pubDate);
+                }
+
+                viewModels.Add(articleViewModel);
+            }
+
+            return viewModels;
         }
     }
 }
