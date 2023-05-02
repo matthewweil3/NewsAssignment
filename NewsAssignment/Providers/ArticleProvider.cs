@@ -172,6 +172,7 @@ namespace NewsAssignment.Providers
 
                         current.language = item.language;
                         current.fullDescription = item.fullDescription;
+                        current.status = Article.State.Published;
                         DBArticles.Add(current);
                     }
                 }

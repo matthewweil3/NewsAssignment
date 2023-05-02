@@ -19,7 +19,7 @@ namespace NewsAssignment.Pages
         public IndexModel(IConfiguration configuration, NewsAssignment.Data.ApplicationDbContext context)
         {
             _config = configuration;
-            _provider = new ArticleProvider();
+            _provider = new ArticleProvider(context);
             _useRandomArticles = _config.GetValue<bool>("UseRandomArticles");
             _context = context;
 
@@ -43,52 +43,35 @@ namespace NewsAssignment.Pages
 
             foreach (var article in dbArticles)
             {
-                var articleViewModel = new ArticleViewModel();
-
-                articleViewModel.Id = article.Id;
-                articleViewModel.Link = article.link;
-                articleViewModel.Title = article.title;
-                articleViewModel.Creator = article.creator;
-                articleViewModel.VideoUrl = article.video_url;
-                articleViewModel.Description = article.description;
-                articleViewModel.Content = article.content;
-                articleViewModel.ImageUrl = article.image_url;
-                articleViewModel.Country = article.country;
-                articleViewModel.Categories = article.category.Split(",").Select(x => x.Trim()).ToList();
-                articleViewModel.Language = article.language;
-
-                // https://stackoverflow.com/questions/5366285/parse-string-to-datetime-in-c-sharp
-                articleViewModel.PublishDate = DateTime.ParseExact(article.pubDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-                
-                Articles.Add(articleViewModel);
-            }
-
-            if (_context.Article != null)
-            {
-                foreach (var article in _context.Article)
+                if (article.status == Article.State.Published)
                 {
-                    if (article.status == Article.State.Published)
+                    var articleViewModel = new ArticleViewModel();
+
+                    articleViewModel.Id = article.Id;
+                    articleViewModel.Link = article.link;
+                    articleViewModel.Title = article.title;
+                    articleViewModel.Creator = article.creator;
+                    articleViewModel.VideoUrl = article.video_url;
+                    articleViewModel.Description = article.description;
+                    articleViewModel.Content = article.content;
+                    articleViewModel.ImageUrl = article.image_url;
+                    articleViewModel.Country = article.country;
+                    articleViewModel.Categories = article.category.Split(",").Select(x => x.Trim()).ToList();
+                    articleViewModel.Language = article.language;
+
+                    // https://stackoverflow.com/questions/5366285/parse-string-to-datetime-in-c-sharp
+                    try
                     {
-                        var articleViewModel = new ArticleViewModel();
-
-                        articleViewModel.Id = article.Id;
-                        articleViewModel.Title = article.title;
-                        articleViewModel.Creator = article.creator;
-                        articleViewModel.VideoUrl = article.video_url;
-                        articleViewModel.Description = article.description;
-                        articleViewModel.Content = article.content;
-                        articleViewModel.ImageUrl = article.image_url;
-                        articleViewModel.Country = article.country;
-                        articleViewModel.Categories = article.category.Split(",").Select(x => x.Trim()).ToList();
-                        articleViewModel.Language = article.language;
-
-                        // https://stackoverflow.com/questions/5366285/parse-string-to-datetime-in-c-sharp
-                        articleViewModel.PublishDate = DateTime.Parse(article.pubDate);
-
-                        Articles.Add(articleViewModel);
+                        articleViewModel.PublishDate = DateTime.ParseExact(article.pubDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
                     }
+                    catch
+                    {
+                        articleViewModel.PublishDate = DateTime.Parse(article.pubDate);
+                    }
+                    Articles.Add(articleViewModel);
                 }
             }
+
 
             return Page();
         }
