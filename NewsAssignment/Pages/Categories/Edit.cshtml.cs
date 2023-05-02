@@ -39,12 +39,12 @@ namespace NewsAssignment.Pages.Categories
         
         public async Task<IActionResult> OnPostAsync()
         {
-
+            
             storeID = _userManager.GetUserId(HttpContext.User); 
             _context.ApplicationUserCategory.RemoveRange(_context.ApplicationUserCategory.Where(x => x.ApplicationUserId == storeID));
             await _context.SaveChangesAsync();
 
-            var cats = Request.Form["selected"];
+            var cats = Request.Form["favorite"];
             for (int i = 0; i < 5; i++)  //loops 5 times because only select 5 categories
             {
                 var APUC = new ApplicationUserCategory { ApplicationUserId = storeID, CategoryId = Int32.Parse(cats[i]) };

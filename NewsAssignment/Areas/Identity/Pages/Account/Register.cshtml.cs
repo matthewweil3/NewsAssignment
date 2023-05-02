@@ -145,17 +145,17 @@ namespace NewsAssignment.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    if (user.Email == "matthewweil3@gmail.com")
-                    {
-                        var defaultrole = _roleManager.FindByNameAsync("ADMIN").Result;
+                   //// if (user.Email == "matthewweil3@gmail.com")
+                   // {
+                   //     var defaultrole = _roleManager.FindByNameAsync("ADMIN").Result;
 
-                        if (defaultrole != null)
-                        {
-                            IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
-                        }
-                    }
-                    else
-                    {
+                   //     if (defaultrole != null)
+                   //     {
+                   //         IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
+                   //     }
+                   // }
+                   // else
+                   // {
                         var defaultrole = _roleManager.FindByNameAsync("SUB").Result;
 
                         if (defaultrole != null)
@@ -163,7 +163,7 @@ namespace NewsAssignment.Areas.Identity.Pages.Account
                             IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
                         }
 
-                    }
+                    //}
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

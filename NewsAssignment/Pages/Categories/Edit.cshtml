@@ -51,9 +51,10 @@
     <h2 style="color:#106DC9;" align="center">Choose 5 of your favorite categories!</h2>
     
 <form method="post">
-    <select id ="sbOne" multiple"  asp-items="@ViewBag.CategoryId" size="15"> Categories </select>
+    
+    <select id ="sbOne" multiple="multiple"  asp-items="@ViewBag.CategoryId" size="15"> Categories </select>
 
-    <select id = "sbTwo" name = "selected" multiple="multiple" size="15" selected ="true"> Favorites </select>
+    <select id = "sbTwo" name = "favorite" multiple="multiple" size="15"> Favorites </select>
 
     <br />
 
@@ -65,6 +66,9 @@
     <input type="submit" id="submit" value="Save" />
 
 </form>
+
+
+
 </body>
 
 @section Scripts {

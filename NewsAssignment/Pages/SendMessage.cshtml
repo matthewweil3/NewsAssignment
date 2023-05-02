@@ -1,0 +1,37 @@
+﻿@page
+@model NewsAssignment.Pages.SendMessageModel
+@{
+}
+@using (Html.BeginForm("SendToSpecificUser", "SendMessage", FormMethod.Post))
+{
+ <div class="row">
+        <div class="col-6">
+            User Id
+        </div>
+        <div class="col-6">
+            @Html.TextBoxFor(model => Model.message.role, new { @maxlength = "50" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-6">
+            Article Heading
+        </div>
+        <div class="col-6">
+            @Html.TextBoxFor(model => Model.message.header)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-6">
+            Article Content
+        </div>
+        <div class="col-6">
+            @Html.TextBoxFor(model => Model.message.content)
+        </div>
+    </div>
+    <div>
+        <button type="submit">Send to Specific User</button>
+    </div>
+}
+

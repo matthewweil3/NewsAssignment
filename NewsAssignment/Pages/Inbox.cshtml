@@ -1,0 +1,13 @@
+﻿@page
+@model NewsAssignment.Pages.InboxModel
+@{
+}
+<div class="text-center">
+    <h1 class="display-4">Inbox</h1>
+    <p id="user"></p>
+    <div id="articleList"></div>
+</div>
+<input type="hidden" id="signalRConnectionId" />
+
+<script src=”/lib/signalr/signalr.js”></script>
+<script src=”/js/usernotification.js”></script>
