@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,7 +12,7 @@ using System.Reflection;
 
 namespace NewsAssignment.Pages
 {
-    // [Authorize(Roles ="Admin,Writer,Publisher,Editor")]
+    [Authorize(Roles ="Admin,Writer,Publisher,Editor")]
     public class SendMessageModel : PageModel
     {
         private readonly IHubContext<NotificationHub> _notificationHubContext;
