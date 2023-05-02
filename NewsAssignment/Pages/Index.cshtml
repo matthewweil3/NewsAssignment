@@ -14,7 +14,7 @@
 
 @foreach(var category in Model.ArticlesByCategory.Keys)
 {
-    <h1 align="center">@(category[0].ToString().ToUpper() + category[1..])</h1>
+    <h1 style="color:#106DC9;" align="center">@(category[0].ToString().ToUpper() + category[1..])</h1>
     @await Html.PartialAsync("~/Pages/Articles/ArticleList.cshtml", Model.ArticlesByCategory[category], ViewData)
 }
 
@@ -22,7 +22,7 @@
     ViewData["list-id"] = "latest-news";
 }
 
-<h1 align="center">Latest News</h1>
+<h1 style="color:#106DC9;" align="center">Latest News</h1>
 @await Html.PartialAsync("~/Pages/Articles/ArticleList.cshtml", Model.Articles, ViewData)
 
 @section Scripts {

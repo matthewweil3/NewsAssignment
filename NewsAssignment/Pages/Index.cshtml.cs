@@ -96,8 +96,8 @@ namespace NewsAssignment.Pages
             }
             else
             {
-                var nextArticles = await _provider.FetchAllArticles(20, startIndex);
-                endlessArticles.AddRange(nextArticles);
+                // Get 20 more articles
+                endlessArticles = await _provider.FetchAllArticles(20, startIndex);
             }
 
             return Partial("Articles/EndlessArticles", endlessArticles);
