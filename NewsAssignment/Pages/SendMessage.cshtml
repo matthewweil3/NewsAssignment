@@ -6,16 +6,16 @@
 {
  <div class="row">
         <div class="col-6">
-            User Id
+         Role
         </div>
         <div class="col-6">
-            @Html.TextBoxFor(model => Model.message.role, new { @maxlength = "50" })
+            <select id="sbOne" name = "roles" asp-items="@ViewBag.RoleId" size="3"> </select>
         </div>
     </div>
     <br />
     <div class="row">
         <div class="col-6">
-            Article Heading
+         Subject
         </div>
         <div class="col-6">
             @Html.TextBoxFor(model => Model.message.header)
@@ -24,7 +24,7 @@
     <br />
     <div class="row">
         <div class="col-6">
-            Article Content
+         Message
         </div>
         <div class="col-6">
             @Html.TextBoxFor(model => Model.message.content)
