@@ -12,11 +12,10 @@
                 src="~/profile.png" style="height: 30px; width:30px; background-image:" alt="avatar"
                 height="40" />
                   <div class="form-outline w-100">
-                <label class="form-label" for="textAreaExample">@item.Username</label> @if(User != null) {if(User.Identity.Name == item.Username){
+                <label class="form-label" for="textArea">@item.Username</label> @if(User != null) {if(User.Identity.Name == item.Username){
                         <a asp-route-id="@item.Id" method="get" asp-page="/Comments/Delete" asp-page-handler="delete"> Delete</a>
                     } }
-                <textarea class="form-control" id="textAreaExample" rows="4"
-                  style="background: #fff;">@item.CommentBody</textarea>
+                <textarea class="form-control" id="textArea" rows="4" readonly disabled>@item.CommentBody</textarea>
                   </div>
                 </div>
               </div>
