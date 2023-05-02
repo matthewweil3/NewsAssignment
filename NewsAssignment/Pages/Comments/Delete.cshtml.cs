@@ -59,5 +59,28 @@ namespace NewsAssignment.Pages.Comments
 
             return RedirectToPage("./Index");
         }
+
+        public async Task<IActionResult> OnGetDeleteAsync(int? id)
+        {
+            if (id == null || _context.Comment == null)
+            {
+                return NotFound();
+            }
+            var comment = await _context.Comment.FindAsync(id);
+
+            if (comment.Username != User.Identity.Name)
+            {
+                return StatusCode(401); // prevent people from deleting others comment
+            }
+
+            if (comment != null)
+            {
+                Comment = comment;
+                _context.Comment.Remove(Comment);
+                await _context.SaveChangesAsync();
+            }
+
+            return Redirect("/Articles/Article?id=" + Comment.ArticleID.ToString());
+        }
     }
 }

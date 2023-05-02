@@ -44,8 +44,8 @@
                     @Html.DisplayFor(modelItem => item.ReturnReason)
                     </td>
                     <td>
-                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> &nbsp;
-                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> &nbsp;
+                        <a asp-page="/Articles/Article" asp-route-id="@item.Id">Details</a> &nbsp;
+                        <a asp-page="./EditArticle" asp-route-id="@item.Id">Edit</a> &nbsp;
                         <a asp-route-id="@item.Id" method="post" asp-page-handler="submit">Submit to editor</a> &nbsp;
                     </td>
                 </tr>

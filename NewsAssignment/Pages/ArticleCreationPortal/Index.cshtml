@@ -3,21 +3,20 @@
 @{
 }
 
-
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6" style="margin-top:20px;">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Writers</h5>
+                <h5 style="color:#106DC9;" class="card-title">Writers</h5>
                 <p class="card-text">Create articles here if you are a writer for the website.</p>
                 <a href="ArticleCreationPortal/Writer" class="btn btn-primary">Article Creation</a>
             </div>
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="card">
+        <div class="card" style="margin-top:20px;">
             <div class="card-body">
-                <h5 class="card-title">Editors</h5>
+                <h5 style="color:#106DC9;" class="card-title">Editors</h5>
                 <p class="card-text">Edit articles submitted by the writing team if you are the site's editor.</p>
                 <a href="ArticleCreationPortal/Editor" class="btn btn-primary">Edit Articles</a>
             </div>
@@ -26,8 +25,8 @@
     <div class="col-sm-6" style="margin-top:20px;">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Publisher</h5>
-                <p class="card-text">Review articles to be puublished if you are the site's publisher.</p>
+                <h5 style="color:#106DC9;" class="card-title">Publisher</h5>
+                <p class="card-text">Review articles to be published if you are the site's publisher.</p>
                 <a href="ArticleCreationPortal/Publisher" class="btn btn-primary">Publish Articles</a>
             </div>
         </div>
@@ -35,17 +34,31 @@
         <div class="col-sm-6" style="margin-top:20px;">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Rewrite Portal - @if (User != null && Model.Articles != null) { @Html.Raw(" " + Model.Articles.Count().ToString()); } else { @Html.Raw("0");} </h5>
+                <h5 style="color:#106DC9;" class="card-title">Rewrite Portal - @if (User != null && Model.Articles != null) { @Html.Raw(" " + Model.Articles.Count().ToString()); } else { @Html.Raw("0");} </h5>
                 <p class="card-text">Any articles sent back to your account for revisions will be found here.</p>
                 <a href="ArticleCreationPortal/Rewrite" class="btn btn-primary">Rewrite Articles</a>
             </div>
         </div>
     </div>
+    @if(User != null){ if (User.IsInRole("Admin"))
+        {
+         <div class="col-sm-6" style="margin-top:20px;">
+            <div class="card">
+                <div class="card-body">
+                    <h5 style="color:#106DC9;" class="card-title">Admin Managment Portal </h5>
+                    <p class="card-text">Manage all articles stored in the website.</p>
+                    <a href="ArticleCreationPortal/AdminView" class="btn btn-primary">Manage Articles</a>
+                </div>
+            </div>
+        </div>
+    } }
 </div>
+
+@* add admin view for all articles *@
 
 <br />
 You are signed in as: 
-    @if (User.Identity.Name != null) { @Html.Raw(@User.Identity.Name); } else { @Html.DisplayName("Anonymous");  }
+    @if (User != null) { @User.Identity.Name } else { @Html.DisplayName("Anonymous");  }
     <br />
 
     And your roles are: <br/> @if(Model.roleinfo != null)  {foreach(var v in Model.roleinfo){ @Html.Raw(v.ToString()) <br />;}}

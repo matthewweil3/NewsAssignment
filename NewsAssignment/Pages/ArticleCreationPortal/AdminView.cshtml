@@ -1,5 +1,5 @@
 ﻿@page
-@model NewsAssignment.Pages.ArticleCreationPortal.PublisherModel
+@model NewsAssignment.Pages.ArticleCreationPortal.AdminViewModel
 @{
 }
 
@@ -40,9 +40,7 @@
                 <td>
                     <a asp-page="/Articles/Article" asp-route-id="@item.Id">Details</a> &nbsp;
                     <a asp-page="./EditArticle" asp-route-id="@item.Id">Edit</a> &nbsp;
-                    <a asp-route-id="@item.Id" method="post" asp-page-handler="publish">Publish</a> &nbsp;
-                    <a asp-route-id="@item.Id" method="post" asp-page-handler="edit">Send Back to Editors</a> &nbsp;
-                    <a asp-route-id="@item.Id" method="post" asp-page-handler="rewrite">Send Back to Writers</a> <!-- add reason eventually -->
+                    <a asp-route-id="@item.Id" asp-page-handler="delete">Delete</a> &nbsp;
                 </td>
             </tr>
         }

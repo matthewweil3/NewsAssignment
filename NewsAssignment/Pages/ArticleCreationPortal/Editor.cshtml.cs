@@ -78,7 +78,7 @@ namespace NewsAssignment.Pages.ArticleCreationPortal
                 return Page();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage(".");
         }
     }
 }

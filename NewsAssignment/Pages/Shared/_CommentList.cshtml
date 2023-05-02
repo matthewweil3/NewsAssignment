@@ -1,34 +1,22 @@
 ﻿@model IEnumerable<NewsAssignment.Models.Comment>
+@{
+    List<NewsAssignment.Models.Comment> comments = ViewData["Comments"] as List<NewsAssignment.Models.Comment>;
+}
 
-<!--
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
--->
-<table class="table" id="commentTable">
-    <thead>
-        <tr class="header">
-            <th>
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CommentBody)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-    @if(item.ArticleID.ToString() == ViewData["ArticleID"].ToString())
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CommentBody)
-            </td>
 
-        </tr>
-}}
-    </tbody>
-</table>
+@foreach (var item in comments)
+{
+              <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                <div class="d-flex flex-start w-100">
+                  <img class="rounded-circle shadow-1-strong me-3"
+                src="~/profile.png" style="height: 30px; width:30px; background-image:" alt="avatar"
+                height="40" />
+                  <div class="form-outline w-100">
+                <label class="form-label" for="textArea">@item.Username</label> @if(User != null) {if(User.Identity.Name == item.Username){
+                        <a asp-route-id="@item.Id" method="get" asp-page="/Comments/Delete" asp-page-handler="delete"> Delete</a>
+                    } }
+                <textarea class="form-control" id="textArea" rows="4" readonly disabled>@item.CommentBody</textarea>
+                  </div>
+                </div>
+              </div>
+}

@@ -38,8 +38,8 @@
                     @Html.DisplayFor(modelItem => item.status)
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> &nbsp;
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> &nbsp;
+                    <a asp-page="/Articles/Article" asp-route-id="@item.Id">Details</a> &nbsp;
+                    <a asp-page="./EditArticle" asp-route-id="@item.Id">Edit</a> &nbsp;
                     <a asp-route-id="@item.Id" method="post" asp-page-handler="edited">Submit for publishing</a> &nbsp;
                     <a asp-route-id="@item.Id" method="post" asp-page-handler="rewrite">Send Back to Writers</a>
                 </td>

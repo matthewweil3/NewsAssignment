@@ -5,12 +5,22 @@
     ViewData["Title"] = "Home Page";
 }
 
+<script type="text/javascript">
+    $(function () { }
+            $("#CommentButton").click(function () {
+        $.get('@Url.Action("ShowPartial", "CommentList")', {}, function (response) {
+            $("#Display").html(response);
+        });
+    });
+        );
+</script>
+
 <div class="row mb-3">
     <h6 class="col-12">
-        <a asp-page="/Index" class="btn btn-secondary">
+        <a href='javascript:history.go(-1)' class="btn btn-secondary">
             <i class="bi bi-arrow-left"></i>
             &nbsp;
-            Return to Home
+            Return
         </a>
     </h6>
 </div>
@@ -50,6 +60,18 @@
 
                 <div class="mt-2">@Model.Article.Content</div>
             </div>
-        </div>
+
     </div>
+
+        @await Html.PartialAsync("~/Pages/Shared/_CommentList.cshtml", Model.comments)
+
+        @if (User.Identity.Name != null)
+        {
+            @await Html.PartialAsync("~/Pages/Shared/_CommentCreate.cshtml", new NewsAssignment.Models.Comment())
+        }
 </div>
+
+
+
+
+
