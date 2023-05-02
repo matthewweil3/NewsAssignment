@@ -116,7 +116,7 @@ namespace NewsAssignment.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return Redirect("/Categories/Create");
+                    return Redirect("/Categories/Edit");
                 }
                 if (result.RequiresTwoFactor)
                 {
