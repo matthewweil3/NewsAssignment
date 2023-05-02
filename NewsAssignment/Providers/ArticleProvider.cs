@@ -97,7 +97,7 @@ namespace NewsAssignment.Providers
             DBArticles = DBArticles.Where(x => !urls.Contains(x.link)).ToList();
             _context.Article.AddRange(DBArticles);
             _context.SaveChanges();
-            return _context.Article.Where(x => x.category.Contains(category)).ToList();
+            return _context.Article.Where(x => x.category.Contains(topic)).ToList();
         }
 
         public async Task<List<Article>> FetchAllArticles()
