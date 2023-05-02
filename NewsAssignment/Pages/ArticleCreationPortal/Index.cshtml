@@ -4,7 +4,7 @@
 }
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6" style="margin-top:20px;">
         <div class="card">
             <div class="card-body">
                 <h5 style="color:#106DC9;" class="card-title">Writers</h5>
@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="card">
+        <div class="card" style="margin-top:20px;">
             <div class="card-body">
                 <h5 style="color:#106DC9;" class="card-title">Editors</h5>
                 <p class="card-text">Edit articles submitted by the writing team if you are the site's editor.</p>
@@ -40,6 +40,18 @@
             </div>
         </div>
     </div>
+    @if(User != null){ if (User.IsInRole("Admin"))
+        {
+         <div class="col-sm-6" style="margin-top:20px;">
+            <div class="card">
+                <div class="card-body">
+                    <h5 style="color:#106DC9;" class="card-title">Admin Managment Portal </h5>
+                    <p class="card-text">Manage all articles stored in the website.</p>
+                    <a href="ArticleCreationPortal/AdminView" class="btn btn-primary">Manage Articles</a>
+                </div>
+            </div>
+        </div>
+    } }
 </div>
 
 @* add admin view for all articles *@
