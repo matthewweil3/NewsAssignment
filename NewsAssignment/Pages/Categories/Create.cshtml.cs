@@ -40,6 +40,11 @@ namespace NewsAssignment.Pages.Categories
         {
             storeID = _userManager.GetUserId(HttpContext.User);
             var cats = Request.Form["selected"];
+            if(cats.Count != 5)
+            {
+                TempData["message"] = "You must select 5!";
+                return RedirectToAction("OnGet");
+            }
             for(int i = 0; i < 5; i++)  //loops 5 times because only select 5 categories
             {
                 var APUC = new ApplicationUserCategory { ApplicationUserId = storeID, CategoryId = Int32.Parse(cats[i]) };

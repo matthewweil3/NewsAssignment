@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,7 +12,7 @@ using System.Reflection;
 
 namespace NewsAssignment.Pages
 {
-    // [Authorize(Roles ="Admin,Writer,Publisher,Editor")]
+    [Authorize(Roles ="Admin,Writer,Publisher,Editor")]
     public class SendMessageModel : PageModel
     {
         private readonly IHubContext<NotificationHub> _notificationHubContext;
@@ -40,6 +41,15 @@ namespace NewsAssignment.Pages
         }
         public async void OnPost()
         {
+            ViewData["RoleId"] = _context.Roles.Where(x => x.Name != "Sub")
+                .Where(x => x.Name != "Admin")
+                .Select(x =>
+                    new SelectListItem
+                    {
+                        Value = x.Id,
+                        Text = x.Name
+                    });
+
             message.role = Request.Form["roles"];
             var connections = _userConnectionManager.GetUserConnections(message.role);
             if (connections != null && connections.Count > 0)
@@ -49,6 +59,7 @@ namespace NewsAssignment.Pages
                     await _notificationUserHubContext.Clients.Client(connectionId).SendAsync("sendToUser", message.header, message.content);
                 }
             }
+
             Redirect("~/Index");
         }
 

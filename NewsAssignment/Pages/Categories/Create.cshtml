@@ -45,6 +45,10 @@
     </script>
 </header>
 <body>
+    @if (TempData["message"] != null)
+{
+    <script>alert('@TempData["message"]');</script>
+}
     <h2>Choose 5 of your favorite categories!</h2>
     
 <form method="post">

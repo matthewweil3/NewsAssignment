@@ -5,9 +5,18 @@
 <div class="text-center">
     <h1 class="display-4">Inbox</h1>
     <p id="user"></p>
-    <div id="articleList"></div>
+    <div id="messageList"></div>
 </div>
 <input type="hidden" id="signalRConnectionId" />
 
-<script src=”/lib/signalr/signalr.js”></script>
-<script src=”/js/usernotification.js”></script>
+<script>
+    function ready() {
+    }
+ 
+    role = '@ViewData["UserRole"]';
+    document.addEventListener("DOMContentLoaded", ready);
+    document.getElementById("user").innerHTML = "role: " + role; 
+</script>
+
+<script src="/js/signalr/signalr.js"></script>
+<script src="/js/usernotification.js"></script>
