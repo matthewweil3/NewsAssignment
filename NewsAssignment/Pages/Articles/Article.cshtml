@@ -65,7 +65,7 @@
 
         @await Html.PartialAsync("~/Pages/Shared/_CommentList.cshtml", Model.comments)
 
-        @if (User != null)
+        @if (User.Identity.Name != null)
         {
             @await Html.PartialAsync("~/Pages/Shared/_CommentCreate.cshtml", new NewsAssignment.Models.Comment())
         }
