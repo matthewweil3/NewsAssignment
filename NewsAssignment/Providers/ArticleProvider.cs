@@ -24,13 +24,15 @@ namespace NewsAssignment.Providers
         {
             DBArticles = new List<Article>();
             DTOArticles = new List<ArticleDTO>();
-
+            
+            // Request articles by category
             Uri mb = new Uri("https://newsdata.io/api/1/news?apikey=pub_197475128a14bc8630f52229fdabc71b75c8d&language=en&category=" + topic);
 
             HttpClient client = new HttpClient();
 
             HttpResponseMessage response = await client.GetAsync(mb.ToString());
-
+            
+            // Check if successful and transfer data to the Article model to be stored in DB
             if (response.IsSuccessStatusCode)
             {
                 string data = await response.Content.ReadAsStringAsync();
@@ -114,7 +116,8 @@ namespace NewsAssignment.Providers
         {
             DBArticles = new List<Article>();
             DTOArticles = new List<ArticleDTO>();
-
+            
+            // Request articles for each of the 12 categories
             for (int i = 0; i < 12; i++)
             {
                 Uri mb = new Uri("https://newsdata.io/api/1/news?apikey=pub_197475128a14bc8630f52229fdabc71b75c8d&language=en&category=" + articleCategories[i]);
@@ -123,6 +126,7 @@ namespace NewsAssignment.Providers
 
                 HttpResponseMessage response = await client.GetAsync(mb.ToString());
 
+                // Check if successful and transfer data to the Article model to be stored in DB
                 if (response.IsSuccessStatusCode)
                 {
                     string data = await response.Content.ReadAsStringAsync();
