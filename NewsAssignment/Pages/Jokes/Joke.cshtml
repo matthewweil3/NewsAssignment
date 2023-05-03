@@ -1,7 +1,7 @@
 ﻿@page
 @model NewsAssignment.Pages.Jokes.JokeModel
 
-<h1>2nd Joke</h1>
+<h1>Jokes</h1>
 
 <form method="post">
     <input asp-for="NumOfJokes" />
@@ -9,6 +9,7 @@
 </form>
 <br />
 
+<center>
 @foreach (var joke in Model.jokes)
 {
     <div class="card" style="width: 18rem;">
@@ -16,7 +17,8 @@
         <div class="card-body">
             <h5 class="card-title">Joke</h5>
             <p class="card-text">@joke.joke</p>
-            <a href="#" class="btn btn-primary">Leave??</a>
+            <a href="#" class="btn btn-primary">Scroll Fast?</a>
         </div>
     </div>
 }
+</center>
